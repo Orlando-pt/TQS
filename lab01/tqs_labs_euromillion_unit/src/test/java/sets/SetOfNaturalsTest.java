@@ -55,6 +55,26 @@ public class SetOfNaturalsTest {
     }
 
     @Test
+    public void testAddArrayDuplicates() {
+        int[] elems = new int[]{11, 12, 13, 14, 11};
+
+        /**
+         * it is forbidden to have 2 same values on a set
+         */
+
+        assertThrows(IllegalArgumentException.class, () -> setB.add(elems),
+                "duplicate numbers are forbidden on a set (add)");
+    }
+
+    @Test
+    public void testCreateArrayDuplicates() {
+        int[] elems = new int[]{11, 12, 13, 14, 11};
+
+        assertThrows(IllegalArgumentException.class, () -> SetOfNaturals.fromArray(elems),
+                "duplicate numbers are forbidden on a set (fromArray)");
+    }
+
+    @Test
     public void testAddDuplicate() {
         /**
          * the test above only tests if the set allows negative numbers to be added
@@ -64,6 +84,8 @@ public class SetOfNaturalsTest {
                 "Duplicate numbers shouldn\'t be allowed");
 
     }
+
+
 
     @Test
     public void testIntersectForNoIntersection() {
