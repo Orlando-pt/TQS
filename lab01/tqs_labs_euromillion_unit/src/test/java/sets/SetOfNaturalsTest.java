@@ -93,15 +93,11 @@ public class SetOfNaturalsTest {
 
     }
 
-    /**
-     * Its disabled to allow jacoco to run
-     */
-    @Disabled
     @Test
     public void testIntersectForIntersection() {
         /**
          * verify if intersection is noted
-         * it was necessary to implemnt the method on class SetOfNaturals because it wasn\'t well implemented
+         * it was necessary to implemnt the method on class SetOfNaturals because it wasn\'t implemented
          */
         assertTrue(setC.intersects(setB), "intersection but was reported as not existing");
     }
