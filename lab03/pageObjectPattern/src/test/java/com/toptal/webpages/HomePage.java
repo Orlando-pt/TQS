@@ -16,7 +16,7 @@ public class HomePage {
     //Locators
 
     //Apply as Developer Button
-    @FindBy(how = How.LINK_TEXT, using = "APPLY AS A DEVELOPER")
+    @FindBy(how = How.LINK_TEXT, using = "Apply as a Freelancer")
     private WebElement developerApplyButton;
 
     // Using xpath

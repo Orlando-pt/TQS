@@ -65,6 +65,6 @@ public class DeveloperApplyPage {
 
     public boolean isPageOpened() {
         // Assertion
-        return this.heading.getText().toString().contains("Apply to Join the World's Top Talent Network");
+        return this.heading.getText().toString().contains("Apply to Join");
     }
 }
