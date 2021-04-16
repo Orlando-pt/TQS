@@ -22,8 +22,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureTestDatabase
-//@TestPropertySource(locations = "applicationTest.properties")
+//@AutoConfigureTestDatabase
+@TestPropertySource(locations = "applicationTest.properties")
 public class CarRestControllerTemplateIT {
 
     @LocalServerPort
