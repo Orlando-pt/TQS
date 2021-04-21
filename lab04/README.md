@@ -39,4 +39,5 @@
 - correr o comando
 	- docker run --name mysql5tqs -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=tqsdemo -e MYSQL_USER=demo -e MYSQL_PASSWORD=demo -p 33060:3306 -d mysql
 - fazer as configurações necessárias no ficheiro properties
-
+- n esquecer de colocar a dependência do mysql no pom
+- usar a anotação de @TestPropertiesSource para carregar o ficheiro de propriedades de teste

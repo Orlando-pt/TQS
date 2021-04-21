@@ -56,11 +56,13 @@ public class BlazedemoTest {
     driver.findElement(By.id("zipCode")).click();
     driver.findElement(By.id("zipCode")).sendKeys("3333");
     driver.findElement(By.id("cardType")).click();
+    // ignorar este
     driver.findElement(By.id("cardType")).click();
     {
       WebElement dropdown = driver.findElement(By.id("cardType"));
       dropdown.findElement(By.xpath("//option[. = 'American Express']")).click();
     }
+    // até aqui
     driver.findElement(By.cssSelector("option:nth-child(2)")).click();
     driver.findElement(By.id("creditCardNumber")).click();
     driver.findElement(By.id("creditCardNumber")).sendKeys("1231313131312312312312");
