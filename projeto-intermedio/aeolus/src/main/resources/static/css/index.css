@@ -1,0 +1,9 @@
+body {
+    text-align: center;
+    align-content: center;
+}
+
+#map {
+    width:700px;
+    height: 500px;
+}
