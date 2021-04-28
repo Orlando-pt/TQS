@@ -1,6 +1,6 @@
-package lei.tqs.aeolus.ExternalAPI;
+package lei.tqs.aeolus.externalAPI;
 
-import lei.tqs.aeolus.ExternalAPI.WeatherBitUtils.WeatherBitAPIResponse;
+import lei.tqs.aeolus.externalAPI.WeatherBitUtils.WeatherBitAPIResponse;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.AfterEach;

@@ -1,5 +1,6 @@
-package lei.tqs.aeolus.Controllers;
+package lei.tqs.aeolus.controllers;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,8 @@ public class WebController {
     @GetMapping("/airquality")
     @ResponseBody
     public String getAirQuality(@RequestParam String latitude, @RequestParam String longitude) {
-        System.out.println(latitude);
-        System.out.println(longitude);
+        log.error("Received latitude: " + latitude);
+        log.error("Received longitude: " + longitude);
         return "air_quality.html";
     }
 

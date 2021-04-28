@@ -1,23 +1,17 @@
-package lei.tqs.aeolus.ExternalAPI;
+package lei.tqs.aeolus.externalAPI;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class WeatherBitAPITest {
-
-    private WeatherBitAPI weatherBitAPI;
+class OpenWeatherAPITest {
 
     @BeforeEach
     void setUp() {
-        this.weatherBitAPI = new WeatherBitAPI();
     }
 
     @AfterEach
     void tearDown() {
-        this.weatherBitAPI = null;
     }
 
     @Test

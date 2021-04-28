@@ -1,9 +1,7 @@
-package lei.tqs.aeolus.ExternalAPI.OpenWeatherUtils;
+package lei.tqs.aeolus.externalAPI.OpenWeatherUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-
-import java.util.Calendar;
 
 @Setter
 @Getter

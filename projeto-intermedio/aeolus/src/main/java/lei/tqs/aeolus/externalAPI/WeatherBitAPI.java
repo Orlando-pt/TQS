@@ -1,6 +1,6 @@
-package lei.tqs.aeolus.ExternalAPI;
+package lei.tqs.aeolus.externalAPI;
 
-import lei.tqs.aeolus.ExternalAPI.WeatherBitUtils.WeatherBitAPIResponse;
+import lei.tqs.aeolus.externalAPI.WeatherBitUtils.WeatherBitAPIResponse;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;

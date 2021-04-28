@@ -1,4 +1,4 @@
-package lei.tqs.aeolus.ExternalAPI;
+package lei.tqs.aeolus.externalAPI;
 
 import lombok.*;
 
