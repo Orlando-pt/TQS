@@ -17,17 +17,17 @@ public class Cache<K, V> implements CacheInterface<K, V> {
      * A Map implementation with a fixed maximum size which removes
      * the least recently used entry if an entry is added when full.
      */
-    private LRUMap<K, CacheObject> cacheMap;
+    private LRUMap<K, CacheObject<V>> cacheMap;
 
     public Cache(long timeToLive, final long timerInterval, int maxItems) {
         this.timeToLive = timeToLive * 1000;
 
-        cacheMap = new LRUMap<K, CacheObject>(maxItems);
+        cacheMap = new LRUMap<K, CacheObject<V>>(maxItems);
 
         if (timeToLive > 0 && timerInterval > 0) {
             var t = new Thread(
                     () -> {
-                        boolean keepGoing = true;
+                        var keepGoing = true;
                         while (keepGoing) {
                             try {
                                 Thread.sleep(timerInterval * 1000);
@@ -47,14 +47,14 @@ public class Cache<K, V> implements CacheInterface<K, V> {
     @Override
     public void put(K key, V value) {
         synchronized (this.cacheMap) {
-            this.cacheMap.put(key, new CacheObject(value));
+            this.cacheMap.put(key, new CacheObject<V>(value));
         }
     }
 
     @Override
     public Optional<V> get(K key) {
         synchronized (this.cacheMap) {
-            CacheObject object = (CacheObject) this.cacheMap.get(key);
+            CacheObject<V> object = this.cacheMap.get(key);
 
             if (object == null) {
                 return Optional.empty();
@@ -113,11 +113,11 @@ public class Cache<K, V> implements CacheInterface<K, V> {
         ArrayList<K> deletekeys = null;
 
         synchronized (this.cacheMap) {
-            MapIterator itr = this.cacheMap.mapIterator();
+            MapIterator<K, CacheObject<V>> itr = this.cacheMap.mapIterator();
 
-            deletekeys = new ArrayList<K>((this.cacheMap.size()/2) + 1);
+            deletekeys = new ArrayList<>((this.cacheMap.size()/2) + 1);
             K key = null;
-            CacheObject cacheObject = null;
+            CacheObject<V> cacheObject = null;
 
             while(itr.hasNext()) {
                 key = (K) itr.next();
