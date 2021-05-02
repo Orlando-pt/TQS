@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 class CacheTest {
 
@@ -50,7 +51,8 @@ class CacheTest {
          * sleep for 1 second
          * less than the time to live
          */
-        systemClock.sleep(1);
+        // systemClock.sleep(1);
+        TimeUnit.SECONDS.sleep(1);
 
         Optional<String> value = this.cache.get(this.aveiro);
 
@@ -69,13 +71,14 @@ class CacheTest {
     void whenPutValueOnCache_ifTimeToLivePassed_ThenNoValueShouldBeRetrieved() throws InterruptedException{
 
         /**
-         * sleep for 4 second
+         * sleep for 3 second
          * more than the time to live
          *
          * this scenario is also applied when a non stored value is requested on the cache
          * the cache should return a empty response
          */
-        systemClock.sleep(3);
+        // systemClock.sleep(3);
+        TimeUnit.SECONDS.sleep(3);
 
         Optional<String> value = this.cache.get(this.aveiro);
 
