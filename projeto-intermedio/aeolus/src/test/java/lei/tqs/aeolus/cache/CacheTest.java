@@ -13,13 +13,11 @@ import java.util.concurrent.TimeUnit;
 class CacheTest {
 
     // TODO substituir o WHILE LOOP para testar a tread que corre para limpar
+    // TODO a failMessage não é lá grande coisa
 
     private Cache<ImmutablePair, String> cache;
     private ImmutablePair<String, String> aveiro = new ImmutablePair<>("40.640506", "-8.653754");
     private ImmutablePair<String, String> lisboa = new ImmutablePair<>("38.736946", "-9.142685");
-
-    // clock object to simulate delays
-    // private SystemClock systemClock = new SystemClock();
 
     // verify maxed out cache
     private Cache<ImmutablePair, String> maxedOutCache;

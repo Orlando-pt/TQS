@@ -4,11 +4,13 @@ import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.map.LRUMap;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
 public class Cache<K, V> implements CacheInterface<K, V> {
     private long timeToLive;
+    private CacheStats stats;
 
     // TODO colocar aqui o logging
 
@@ -22,7 +24,8 @@ public class Cache<K, V> implements CacheInterface<K, V> {
     public Cache(long timeToLive, final long timerInterval, int maxItems) {
         this.timeToLive = timeToLive * 1000;
 
-        cacheMap = new LRUMap<>(maxItems);
+        this.cacheMap = new LRUMap<>(maxItems);
+        this.stats = new CacheStats();
 
         if (timeToLive > 0 && timerInterval > 0) {
             var t = new Thread(
@@ -47,6 +50,7 @@ public class Cache<K, V> implements CacheInterface<K, V> {
     @Override
     public void put(K key, V value) {
         synchronized (this.cacheMap) {
+            this.stats.incRequests();
             this.cacheMap.put(key, new CacheObject<>(value));
         }
     }
@@ -57,9 +61,13 @@ public class Cache<K, V> implements CacheInterface<K, V> {
             CacheObject<V> object = this.cacheMap.get(key);
 
             if (object == null) {
+                this.stats.incRequests();
+
                 return Optional.empty();
             } else {
-                object.setLastAccessed(System.currentTimeMillis());
+                this.stats.incAnsweredRequests();
+
+                object.accessed(System.currentTimeMillis());
                 return Optional.of(object.getValue());
             }
         }
@@ -108,6 +116,41 @@ public class Cache<K, V> implements CacheInterface<K, V> {
     }
 
     @Override
+    public long numberOfRequests() {
+        return this.stats.getRequests();
+    }
+
+    @Override
+    public long requestsToKey(K key) {
+        synchronized (this.cacheMap) {
+            CacheObject<V> object = this.cacheMap.get(key);
+
+            if (object == null) {
+                return 0;
+            } else {
+                return object.getTimesRequested();
+            }
+        }
+    }
+
+    @Override
+    public long requestsAnswered() {
+        return this.stats.getRequestsCachedAndAnswered();
+    }
+
+    @Override
+    public K mostRequested() {
+        synchronized (this.cacheMap) {
+            return Collections.max(this.cacheMap.entrySet(), (e1, e2) -> e1.getValue().getTimesRequested() - e2.getValue().getTimesRequested()).getKey();
+        }
+    }
+
+    @Override
+    public double percentageOfSuccessfulRequestsAnswered() {
+        return Math.round(((float) this.stats.getRequestsCachedAndAnswered() / this.stats.getRequests()) * 10000d) / 100d;
+    }
+
+    @Override
     public void cleanup() {
         long now = System.currentTimeMillis();
         ArrayList<K> deletekeys = null;
@@ -137,4 +180,6 @@ public class Cache<K, V> implements CacheInterface<K, V> {
             Thread.yield();
         }
     }
+
+    public void setCacheStats(CacheStats stats) { this.stats = stats; }
 }

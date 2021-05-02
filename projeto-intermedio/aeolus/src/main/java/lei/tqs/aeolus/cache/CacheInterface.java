@@ -14,4 +14,11 @@ public interface CacheInterface<K, V> {
     boolean isFull();
     int maxSize();
     boolean containsKey(K key);
+
+    // stats
+    long numberOfRequests();
+    long requestsToKey(K key);
+    long requestsAnswered();
+    K mostRequested();
+    double percentageOfSuccessfulRequestsAnswered();
 }
