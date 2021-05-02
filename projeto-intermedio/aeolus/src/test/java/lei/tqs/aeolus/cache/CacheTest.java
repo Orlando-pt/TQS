@@ -58,9 +58,9 @@ class CacheTest {
         Optional<String> value = this.cache.get(this.aveiro);
 
         Assertions.assertThat(value.isPresent())
-                .isTrue()
                 .withFailMessage(() -> "When a value is placed on cache and time to live" +
-                        " hasn't expired yet, on get() the value should be returned");
+                        " hasn't expired yet, on get() the value should be returned")
+                .isTrue();
 
         Assertions.assertThat(value.get())
                 .withFailMessage(() -> "When a value is placed on cache and time to live" +

@@ -17,15 +17,18 @@ public class Cache<K, V> implements CacheInterface<K, V> {
      * A Map implementation with a fixed maximum size which removes
      * the least recently used entry if an entry is added when full.
      */
-    private LRUMap cacheMap;
+    private LRUMap<K, CacheObject> cacheMap;
 
     protected class CacheObject {
-        public long lastAccessed = System.currentTimeMillis();
+        private long lastAccessed = System.currentTimeMillis();
         public V value;
 
         protected CacheObject(V value) {
             this.value = value;
         }
+
+        public long getLastAccessed() { return this.lastAccessed; }
+        public void setLastAccessed(long time) { this.lastAccessed = time; }
     }
 
     public Cache(long timeToLive, final long timerInterval, int maxItems) {
@@ -38,12 +41,13 @@ public class Cache<K, V> implements CacheInterface<K, V> {
                     new Runnable() {
                         @Override
                         public void run() {
-                            while (true) {
+                            boolean keepGoing = true;
+                            while (keepGoing) {
                                 try {
                                     Thread.sleep(timerInterval * 1000);
                                 } catch (InterruptedException ex) {
+                                    keepGoing = false;
                                     Thread.currentThread().interrupt();
-                                    break;
                                 }
                                 cleanup();
                             }
@@ -70,7 +74,7 @@ public class Cache<K, V> implements CacheInterface<K, V> {
             if (object == null) {
                 return Optional.empty();
             } else {
-                object.lastAccessed = System.currentTimeMillis();
+                object.setLastAccessed(System.currentTimeMillis());
                 return Optional.of(object.value);
             }
         }
@@ -134,7 +138,7 @@ public class Cache<K, V> implements CacheInterface<K, V> {
                 key = (K) itr.next();
                 cacheObject = (CacheObject) itr.getValue();
 
-                if (cacheObject != null && (now > (this.timeToLive + cacheObject.lastAccessed)))
+                if (cacheObject != null && (now > (this.timeToLive + cacheObject.getLastAccessed())))
                     deletekeys.add(key);
             }
         }
