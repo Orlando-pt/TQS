@@ -19,38 +19,23 @@ public class Cache<K, V> implements CacheInterface<K, V> {
      */
     private LRUMap<K, CacheObject> cacheMap;
 
-    protected class CacheObject {
-        private long lastAccessed = System.currentTimeMillis();
-        public V value;
-
-        protected CacheObject(V value) {
-            this.value = value;
-        }
-
-        public long getLastAccessed() { return this.lastAccessed; }
-        public void setLastAccessed(long time) { this.lastAccessed = time; }
-    }
-
     public Cache(long timeToLive, final long timerInterval, int maxItems) {
         this.timeToLive = timeToLive * 1000;
 
-        cacheMap = new LRUMap(maxItems);
+        cacheMap = new LRUMap<K, CacheObject>(maxItems);
 
         if (timeToLive > 0 && timerInterval > 0) {
-            Thread t = new Thread(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            boolean keepGoing = true;
-                            while (keepGoing) {
-                                try {
-                                    Thread.sleep(timerInterval * 1000);
-                                } catch (InterruptedException ex) {
-                                    keepGoing = false;
-                                    Thread.currentThread().interrupt();
-                                }
-                                cleanup();
+            var t = new Thread(
+                    () -> {
+                        boolean keepGoing = true;
+                        while (keepGoing) {
+                            try {
+                                Thread.sleep(timerInterval * 1000);
+                            } catch (InterruptedException ex) {
+                                keepGoing = false;
+                                Thread.currentThread().interrupt();
                             }
+                            cleanup();
                         }
                     }
             );
@@ -75,7 +60,7 @@ public class Cache<K, V> implements CacheInterface<K, V> {
                 return Optional.empty();
             } else {
                 object.setLastAccessed(System.currentTimeMillis());
-                return Optional.of(object.value);
+                return Optional.of((V) object.getValue());
             }
         }
     }
