@@ -24,16 +24,17 @@ class OpenWeatherAPITest {
 
     @BeforeEach
     void setUp() {
-        OpenWeatherResponse responseAPI = getObjectsOriginatedByTheAPIRequestCurrent();
-
-        Mockito.when(
-                this.openWeatherRequest.getCurrentAQFromAPI("40.8661", "-8.6457")
-        ).thenReturn(responseAPI);
     }
 
     @Test
     void getCurrentAQ() {
         // TODO continuar neste teste
+        OpenWeatherResponse responseAPI = getObjectsOriginatedByTheAPIRequestCurrent();
+
+        Mockito.when(
+                this.openWeatherRequest.getCurrentAQFromAPI("40.8661", "-8.6457")
+        ).thenReturn(responseAPI);
+
         APIResponse apiResponse = this.openWeatherAPI.getCurrentAQ("40.8661", "-8.6457");
 
         System.out.println(apiResponse);
