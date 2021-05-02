@@ -2,6 +2,8 @@ package lei.tqs.aeolus.external_api;
 
 import lombok.*;
 
+import java.util.List;
+
 @Setter @Getter @NoArgsConstructor @ToString
 @AllArgsConstructor
 public class APIResponse {
@@ -9,11 +11,9 @@ public class APIResponse {
     private String latitude;
     private String longitude;
 
-    private float co;
-    private float no;
-    private float no2;
-    private float o3;
-    private float so2;
-    private float pm10;
-    private float nh3;
+    private List<Measure> measureList;
+
+    public void addMeasure(Measure measure) {
+        this.measureList.add(measure);
+    }
 }

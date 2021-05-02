@@ -68,7 +68,7 @@ class CacheStatsTest {
     void whenTryToCheckTheRequestOfNoCachedValue_ThenReturn0() {
         Assertions.assertThat(
                 this.cache.requestsToKey(ImmutablePair.of("0", "0"))
-        ).isEqualTo(0);
+        ).isZero();
     }
 
     private void simulateRequests() {

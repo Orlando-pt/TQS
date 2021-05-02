@@ -1,29 +1,27 @@
-package lei.tqs.aeolus.external_api;
+package lei.tqs.aeolus.external_api.open_weather_utils;
 
-import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherResponse;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class OpenWeatherAPIIT {
-
-    private OpenWeatherAPI openWeatherAPI;
+class OpenWeatherRequestIT {
+    private OpenWeatherRequest openWeatherRequest;
 
     @BeforeEach
     void setUp() {
-        this.openWeatherAPI = new OpenWeatherAPI();
+        this.openWeatherRequest = new OpenWeatherRequest();
     }
 
     @AfterEach
     void tearDown() {
-        this.openWeatherAPI = null;
+        this.openWeatherRequest = null;
     }
 
     @Test
     void getCurrentAQFromAPITest() {
-        OpenWeatherResponse response = this.openWeatherAPI.getCurrentAQFromAPI("40.866057889889206", "-8.645710577339893");
+        OpenWeatherResponse response = this.openWeatherRequest.getCurrentAQFromAPI("40.866057889889206", "-8.645710577339893");
         System.out.println(response);
 
         MatcherAssert.assertThat(response.getCoord().getLat(), CoreMatchers.is("40.8661"));
@@ -31,7 +29,7 @@ class OpenWeatherAPIIT {
 
     @Test
     void getHistoryAQFromAPITest() {
-        OpenWeatherResponse response = this.openWeatherAPI.getHistoryAQFromAPI("40.866057889889206", "-8.645710577339893");
+        OpenWeatherResponse response = this.openWeatherRequest.getHistoryAQFromAPI("40.866057889889206", "-8.645710577339893");
         System.out.println(response);
 
         MatcherAssert.assertThat(response.getCoord().getLat(), CoreMatchers.is("40.8661"));
