@@ -17,7 +17,7 @@ class CacheTest {
     private ImmutablePair<String, String> lisboa = new ImmutablePair<>("38.736946", "-9.142685");
 
     // clock object to simulate delays
-    private SystemClock systemClock = new SystemClock();
+    // private SystemClock systemClock = new SystemClock();
 
     // verify maxed out cache
     private Cache<ImmutablePair, String> maxedOutCache;
@@ -52,7 +52,8 @@ class CacheTest {
          * less than the time to live
          */
         // systemClock.sleep(1);
-        TimeUnit.SECONDS.sleep(1);
+        // TimeUnit.SECONDS.sleep(1);
+        SystemClock.whileSleep(1);
 
         Optional<String> value = this.cache.get(this.aveiro);
 
@@ -78,7 +79,8 @@ class CacheTest {
          * the cache should return a empty response
          */
         // systemClock.sleep(3);
-        TimeUnit.SECONDS.sleep(3);
+        // TimeUnit.SECONDS.sleep(3);
+        SystemClock.whileSleep(3);
 
         Optional<String> value = this.cache.get(this.aveiro);
 
