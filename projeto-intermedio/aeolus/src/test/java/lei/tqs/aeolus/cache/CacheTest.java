@@ -63,9 +63,9 @@ class CacheTest {
                         " hasn't expired yet, on get() the value should be returned");
 
         Assertions.assertThat(value.get())
-                .isEqualTo("a very precise weather prevision")
                 .withFailMessage(() -> "When a value is placed on cache and time to live" +
-                        " hasn't expired yet, on get() the value should be returned");
+                        " hasn't expired yet, on get() the value should be returned")
+                .isEqualTo("a very precise weather prevision");
     }
 
     @Test
@@ -85,9 +85,9 @@ class CacheTest {
         Optional<String> value = this.cache.get(this.aveiro);
 
         Assertions.assertThat(value.isEmpty())
-                .isTrue()
                 .withFailMessage(() -> "When a value is placed on cache and time to live" +
-                        " has expired, on get() no value should be returned");
+                        " has expired, on get() no value should be returned")
+                .isTrue();
     }
 
     @Test
@@ -106,20 +106,21 @@ class CacheTest {
         Optional<String> noValue = this.maxedOutCache.get(this.lisboa);
         Assertions.assertThat(
             noValue.isEmpty()
-        ).isTrue().withFailMessage(() ->
-                "Lisboa is the least recently used value on cache. It should have been removed.");
+        ).withFailMessage(() ->
+                "Lisboa is the least recently used value on cache. It should have been removed.").isTrue();
 
         //verify that, the size of the cache is 2
         Assertions.assertThat(
                 maxedOutCache.size()
-        ).isEqualTo(2).withFailMessage(() ->
-                "The size of the cache should be 2");
+        ).withFailMessage(() ->
+                "The size of the cache should be 2").isEqualTo(2);
 
         // verify that Aveiro and nullIsland are still cached
         Assertions.assertThat(
                 this.maxedOutCache.getKeys()
-        ).contains(this.aveiro, nullIsland).withFailMessage(() ->
-                "The last 2 recently used cached values should be returned");
+        ).withFailMessage(() ->
+                "The last 2 recently used cached values should be returned")
+                .contains(this.aveiro, nullIsland);
     }
 
     @Test
@@ -129,48 +130,52 @@ class CacheTest {
         Optional<String> noValue = this.cache.get(this.lisboa);
 
         Assertions.assertThat(noValue.isEmpty())
-                .isTrue()
                 .withFailMessage(() ->
                         "When a chached value is removed, on get()" +
-                                "no value should be returned");
+                                "no value should be returned")
+                .isTrue();
     }
 
     @Test
     void size() {
         Assertions.assertThat(
                 this.cache.size()
-        ).isEqualTo(2)
-                .withFailMessage(() ->
-                        "Two values were stored on cache. So, the size of the cache should return the value 2");
+        ).withFailMessage(() ->
+                        "Two values were stored on cache. So, the size of the cache should return the value 2")
+                .isEqualTo(2);
     }
 
     @Test
     void isFull() {
         Assertions.assertThat(
                 this.maxedOutCache.isFull()
-        ).isTrue().withFailMessage(() ->
-                "The cache has a max size of 2 stored values. So, it should return true.");
+        ).withFailMessage(() ->
+                "The cache has a max size of 2 stored values. So, it should return true.")
+                .isTrue();
     }
 
     @Test
     void maxSize() {
         Assertions.assertThat(
                 this.cache.maxSize()
-        ).isEqualTo(10).withFailMessage(() ->
-                "The cache has a max size of 10 stored values. So, it should return 10.");
+        ).withFailMessage(() ->
+                "The cache has a max size of 10 stored values. So, it should return 10.")
+                .isEqualTo(10);
     }
 
     @Test
     void containsKey() {
         Assertions.assertThat(
                 this.cache.containsKey(this.lisboa)
-        ).isTrue().withFailMessage(() -> "Lisboa is stored on cache. " +
-                "As consequence, the cache should return true");
+        ).withFailMessage(() -> "Lisboa is stored on cache. " +
+                "As consequence, the cache should return true")
+                .isTrue();
 
         Assertions.assertThat(
                 this.cache.containsKey(new ImmutablePair<String, String>("0", "0"))
-        ).isFalse().withFailMessage(() -> "NullIsland isn't stored on cache. " +
-                "As consequence, the cache should return false");
+        ).withFailMessage(() -> "NullIsland isn't stored on cache. " +
+                "As consequence, the cache should return false")
+                .isFalse();
     }
 
 }

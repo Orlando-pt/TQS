@@ -9,6 +9,9 @@ import java.util.Set;
 
 public class Cache<K, V> implements CacheInterface<K, V> {
     private long timeToLive;
+
+    // TODO colocar aqui o logging
+
     /**
      * LRUMap
      * A Map implementation with a fixed maximum size which removes
@@ -39,7 +42,8 @@ public class Cache<K, V> implements CacheInterface<K, V> {
                                 try {
                                     Thread.sleep(timerInterval * 1000);
                                 } catch (InterruptedException ex) {
-
+                                    Thread.currentThread().interrupt();
+                                    break;
                                 }
                                 cleanup();
                             }
