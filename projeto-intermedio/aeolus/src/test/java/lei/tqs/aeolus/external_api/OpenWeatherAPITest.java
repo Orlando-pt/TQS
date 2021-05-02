@@ -1,4 +1,4 @@
-package lei.tqs.aeolus.externalAPI;
+package lei.tqs.aeolus.external_api;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

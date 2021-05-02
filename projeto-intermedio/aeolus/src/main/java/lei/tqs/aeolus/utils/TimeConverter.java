@@ -9,7 +9,7 @@ public class TimeConverter {
     }
 
     public static Calendar dateFromTimeUnix(long timeUnix) {
-        Calendar calendar = Calendar.getInstance();
+        var calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timeUnix * 1000);
         return calendar;
     }

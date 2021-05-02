@@ -2,7 +2,7 @@ package lei.tqs.aeolus.cache;
 
 public class CacheObject<V> {
     private long lastAccessed = System.currentTimeMillis();
-    public V value;
+    private V value;
 
     public CacheObject(V value) {
         this.value = value;

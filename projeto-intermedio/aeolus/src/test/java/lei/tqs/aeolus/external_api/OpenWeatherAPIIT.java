@@ -1,13 +1,13 @@
-package lei.tqs.aeolus.externalAPI;
+package lei.tqs.aeolus.external_api;
 
-import lei.tqs.aeolus.externalAPI.OpenWeatherUtils.OpenWeatherResponse;
+import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherResponse;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class OpenWeatherAPIIT {
+class OpenWeatherAPIIT {
 
     private OpenWeatherAPI openWeatherAPI;
 

@@ -1,13 +1,13 @@
-package lei.tqs.aeolus.externalAPI;
+package lei.tqs.aeolus.external_api;
 
-import lei.tqs.aeolus.externalAPI.WeatherBitUtils.WeatherBitAPIResponse;
+import lei.tqs.aeolus.external_api.weather_bit_utils.WeatherBitAPIResponse;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class WeatherBitAPIIT {
+class WeatherBitAPIIT {
 
     private WeatherBitAPI weatherBitAPI;
 

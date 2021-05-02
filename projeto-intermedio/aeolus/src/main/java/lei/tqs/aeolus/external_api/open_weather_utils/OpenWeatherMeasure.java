@@ -1,4 +1,4 @@
-package lei.tqs.aeolus.externalAPI.OpenWeatherUtils;
+package lei.tqs.aeolus.external_api.open_weather_utils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;

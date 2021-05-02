@@ -12,6 +12,8 @@ import java.util.concurrent.TimeUnit;
 
 class CacheTest {
 
+    // TODO substituir o WHILE LOOP para testar a tread que corre para limpar
+
     private Cache<ImmutablePair, String> cache;
     private ImmutablePair<String, String> aveiro = new ImmutablePair<>("40.640506", "-8.653754");
     private ImmutablePair<String, String> lisboa = new ImmutablePair<>("38.736946", "-9.142685");
@@ -57,15 +59,15 @@ class CacheTest {
 
         Optional<String> value = this.cache.get(this.aveiro);
 
-        Assertions.assertThat(value.isPresent())
+        Assertions.assertThat(value)
                 .withFailMessage(() -> "When a value is placed on cache and time to live" +
                         " hasn't expired yet, on get() the value should be returned")
-                .isTrue();
+                .isPresent();
 
-        Assertions.assertThat(value.get())
+        Assertions.assertThat(value)
                 .withFailMessage(() -> "When a value is placed on cache and time to live" +
                         " hasn't expired yet, on get() the value should be returned")
-                .isEqualTo("a very precise weather prevision");
+                .contains("a very precise weather prevision");
     }
 
     @Test
@@ -84,10 +86,10 @@ class CacheTest {
 
         Optional<String> value = this.cache.get(this.aveiro);
 
-        Assertions.assertThat(value.isEmpty())
+        Assertions.assertThat(value)
                 .withFailMessage(() -> "When a value is placed on cache and time to live" +
                         " has expired, on get() no value should be returned")
-                .isTrue();
+                .isNotPresent();
     }
 
     @Test
@@ -105,9 +107,9 @@ class CacheTest {
         // verify that, Lisboa is no longer cached
         Optional<String> noValue = this.maxedOutCache.get(this.lisboa);
         Assertions.assertThat(
-            noValue.isEmpty()
+            noValue
         ).withFailMessage(() ->
-                "Lisboa is the least recently used value on cache. It should have been removed.").isTrue();
+                "Lisboa is the least recently used value on cache. It should have been removed.").isNotPresent();
 
         //verify that, the size of the cache is 2
         Assertions.assertThat(
@@ -129,11 +131,11 @@ class CacheTest {
 
         Optional<String> noValue = this.cache.get(this.lisboa);
 
-        Assertions.assertThat(noValue.isEmpty())
+        Assertions.assertThat(noValue)
                 .withFailMessage(() ->
                         "When a chached value is removed, on get()" +
                                 "no value should be returned")
-                .isTrue();
+                .isNotPresent();
     }
 
     @Test

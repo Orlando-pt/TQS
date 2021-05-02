@@ -1,6 +1,6 @@
-package lei.tqs.aeolus.externalAPI;
+package lei.tqs.aeolus.external_api;
 
-import lei.tqs.aeolus.externalAPI.OpenWeatherUtils.OpenWeatherResponse;
+import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherResponse;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
@@ -37,9 +37,9 @@ public class OpenWeatherAPI implements ExternalApiInterface{
     }
 
     public OpenWeatherResponse getHistoryAQFromAPI(String lat, String lng) {
-        int current = 1619456400;
+        var current = 1619456400;
         int start = 1619456400 - 3600;
-        String url = URL_HISTORY_AQ + lat + "&lon=" + lng + "&start=" + String.valueOf(start) + "&end=" + String.valueOf(current) + "&appid=" + API_KEY;
+        String url = URL_HISTORY_AQ + lat + "&lon=" + lng + "&start=" + start + "&end=" + current + "&appid=" + API_KEY;
 
         return this.restTemplate.getForObject(url, OpenWeatherResponse.class);
     }

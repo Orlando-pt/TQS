@@ -1,4 +1,4 @@
-package lei.tqs.aeolus.externalAPI.OpenWeatherUtils;
+package lei.tqs.aeolus.external_api.open_weather_utils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
@@ -9,7 +9,8 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OpenWeatherData {
-    private OpenWeatherMeasure components;
-    private long dt;
+
+public class Coordinate {
+    private String lon;
+    private String lat;
 }
