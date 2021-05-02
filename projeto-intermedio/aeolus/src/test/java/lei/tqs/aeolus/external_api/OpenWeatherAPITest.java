@@ -4,12 +4,15 @@ import lei.tqs.aeolus.external_api.open_weather_utils.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
+@ExtendWith(MockitoExtension.class)
 class OpenWeatherAPITest {
 
     @Mock
@@ -30,13 +33,13 @@ class OpenWeatherAPITest {
 
     @Test
     void getCurrentAQ() {
-        /**
+        // TODO continuar neste teste
         APIResponse apiResponse = this.openWeatherAPI.getCurrentAQ("40.8661", "-8.6457");
 
         System.out.println(apiResponse);
 
         Assertions.assertThat(apiResponse.getLatitude())
-                .isEqualTo("40.8661");**/
+                .isEqualTo("40.8661");
     }
 
     @Test

@@ -2,6 +2,7 @@ package lei.tqs.aeolus.external_api;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter @Getter @NoArgsConstructor @ToString
@@ -14,6 +15,9 @@ public class APIResponse {
     private List<Measure> measureList;
 
     public void addMeasure(Measure measure) {
+        if (this.measureList == null)
+            this.measureList = new ArrayList<>();
+
         this.measureList.add(measure);
     }
 }

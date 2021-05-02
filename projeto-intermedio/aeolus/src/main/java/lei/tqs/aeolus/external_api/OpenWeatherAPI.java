@@ -1,5 +1,6 @@
 package lei.tqs.aeolus.external_api;
 
+import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherData;
 import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherRequest;
 import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherResponse;
 
@@ -54,15 +55,15 @@ public class OpenWeatherAPI implements ExternalApiInterface{
 
         // add measures
         response.getList().forEach( (measure) -> {
-            apiResponse.addMeasure(
-                    new Measure(
-                            measure.getComponents().getCo(),
-                            measure.getComponents().getNo2(),
-                            measure.getComponents().getO3(),
-                            measure.getComponents().getSo2(),
-                            measure.getComponents().getPm10()
-                    )
-            );
+                    apiResponse.addMeasure(
+                            new Measure(
+                                    measure.getComponents().getCo(),
+                                    measure.getComponents().getNo2(),
+                                    measure.getComponents().getO3(),
+                                    measure.getComponents().getSo2(),
+                                    measure.getComponents().getPm10()
+                            )
+                    );
                 }
         );
 
