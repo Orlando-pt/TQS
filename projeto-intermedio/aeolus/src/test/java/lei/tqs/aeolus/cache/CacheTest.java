@@ -62,11 +62,7 @@ class CacheTest {
         Assertions.assertThat(value)
                 .withFailMessage(() -> "When a value is placed on cache and time to live" +
                         " hasn't expired yet, on get() the value should be returned")
-                .isPresent();
-
-        Assertions.assertThat(value)
-                .withFailMessage(() -> "When a value is placed on cache and time to live" +
-                        " hasn't expired yet, on get() the value should be returned")
+                .isPresent()
                 .contains("a very precise weather prevision");
     }
 

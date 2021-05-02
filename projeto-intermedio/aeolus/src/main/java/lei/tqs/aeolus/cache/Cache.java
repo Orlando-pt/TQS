@@ -22,7 +22,7 @@ public class Cache<K, V> implements CacheInterface<K, V> {
     public Cache(long timeToLive, final long timerInterval, int maxItems) {
         this.timeToLive = timeToLive * 1000;
 
-        cacheMap = new LRUMap<K, CacheObject<V>>(maxItems);
+        cacheMap = new LRUMap<>(maxItems);
 
         if (timeToLive > 0 && timerInterval > 0) {
             var t = new Thread(
@@ -47,7 +47,7 @@ public class Cache<K, V> implements CacheInterface<K, V> {
     @Override
     public void put(K key, V value) {
         synchronized (this.cacheMap) {
-            this.cacheMap.put(key, new CacheObject<V>(value));
+            this.cacheMap.put(key, new CacheObject<>(value));
         }
     }
 
@@ -60,7 +60,7 @@ public class Cache<K, V> implements CacheInterface<K, V> {
                 return Optional.empty();
             } else {
                 object.setLastAccessed(System.currentTimeMillis());
-                return Optional.of((V) object.getValue());
+                return Optional.of(object.getValue());
             }
         }
     }
@@ -120,8 +120,8 @@ public class Cache<K, V> implements CacheInterface<K, V> {
             CacheObject<V> cacheObject = null;
 
             while(itr.hasNext()) {
-                key = (K) itr.next();
-                cacheObject = (CacheObject) itr.getValue();
+                key = itr.next();
+                cacheObject = itr.getValue();
 
                 if (cacheObject != null && (now > (this.timeToLive + cacheObject.getLastAccessed())))
                     deletekeys.add(key);
