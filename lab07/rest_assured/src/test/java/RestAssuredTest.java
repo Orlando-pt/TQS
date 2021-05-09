@@ -7,12 +7,14 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.Matchers.*;
 
 public class RestAssuredTest {
+    private static final String URL = "https://jsonplaceholder.typicode.com/todos";
 
     @Test
     void endpointIsAvailableTest() {
+
         given()
                 .when()
-                .get("https://jsonplaceholder.typicode.com/todos")
+                .get(URL)
                 .then()
                 .assertThat()
                 .statusCode(200);
@@ -24,9 +26,20 @@ public class RestAssuredTest {
 
         given()
                 .when()
-                .get("https://jsonplaceholder.typicode.com/todos")
+                .get(URL + "/4")
                 .then()
-                .body("$.findAll { it.id < 5 }.title", hasItem(title));
+                .assertThat().statusCode(200)
+                .and().body("title", equalTo(title));
+    }
+
+    @Test
+    void test198And199ToDos() {
+        given()
+                .when()
+                .get(URL)
+                .then()
+                .assertThat().statusCode(200)
+                .and().body("id", hasItems(198, 199));
     }
 
 }
