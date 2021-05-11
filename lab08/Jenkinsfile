@@ -1,0 +1,21 @@
+pipeline {
+	agent any
+	tools {
+		jdk 'java11'
+		maven 'maven'
+	}
+	stages {
+		stage('Install') {
+			steps {
+				dir('lab02-stack') {
+					sh 'mvn clean install'
+				}
+			}
+			post {
+				always {
+					junit '**/target/*-reports/TEST-*.xml'
+				}
+			}
+		}
+	} 
+} 
