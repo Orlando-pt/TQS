@@ -1,24 +1,21 @@
-package lei.tqs.aeolus.external_api;
+package lei.tqs.aeolus.external_api.weather_bit_utils;
 
-import lei.tqs.aeolus.external_api.weather_bit_utils.WeatherBitAPIResponse;
+import lombok.extern.log4j.Log4j2;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class WeatherBitAPIIT {
+import static org.junit.jupiter.api.Assertions.*;
 
-    private WeatherBitAPI weatherBitAPI;
+@Log4j2
+class WeatherBitRequestIT {
+    private WeatherBitRequest weatherBitRequest;
 
     @BeforeEach
     void setUp() {
-        this.weatherBitAPI = new WeatherBitAPI();
-    }
-
-    @AfterEach
-    void tearDown() {
-        this.weatherBitAPI = null;
+        this.weatherBitRequest = new WeatherBitRequest();
     }
 
     @Test
@@ -27,8 +24,8 @@ class WeatherBitAPIIT {
          * testing if the api is responsive and transmitting current air quality data
          * Integration test
          */
-        WeatherBitAPIResponse response = this.weatherBitAPI.getCurrentDataFromAPI("41.16225097228622", "-8.628822176072289");
-        System.out.println(response);
+        WeatherBitAPIResponse response = this.weatherBitRequest.getCurrentDataFromAPI("41.16225097228622", "-8.628822176072289");
+        log.info(response);
 
         MatcherAssert.assertThat(response.getCity_name(), CoreMatchers.is("Porto"));
     }
@@ -39,8 +36,8 @@ class WeatherBitAPIIT {
          * testing if the api is responsive and transmitting historical air quality data
          * Integration test
          */
-        WeatherBitAPIResponse response = this.weatherBitAPI.getHistoryDataFromAPI("40.866057889889206", "-8.645710577339893");
-        System.out.println(response);
+        WeatherBitAPIResponse response = this.weatherBitRequest.getHistoryDataFromAPI("40.866057889889206", "-8.645710577339893");
+        log.info(response);
 
         MatcherAssert.assertThat(response.getCity_name(), CoreMatchers.is("Ovar"));
     }

@@ -1,12 +1,17 @@
 package lei.tqs.aeolus.external_api;
 
-import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherData;
 import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherRequest;
 import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherResponse;
 
 import java.util.Date;
 
 public class OpenWeatherAPI implements ExternalApiInterface{
+
+    /**
+     * Historical data is accessible from 27th November 2020.
+     * Because the other api only returns historic data until 3 days past
+     * The capabilities of this api will be limited
+     */
 
     private OpenWeatherRequest openWeatherRequest;
 
@@ -48,6 +53,12 @@ public class OpenWeatherAPI implements ExternalApiInterface{
 
     private APIResponse parseApiResponseToCommonResponse(OpenWeatherResponse response) {
         APIResponse apiResponse = new APIResponse();
+
+        /**
+         * if response is empty, return also a empty apiResponse
+         */
+        if (response.empty())
+            return apiResponse;
 
         // set coordinates
         apiResponse.setLatitude(response.getCoord().getLat());

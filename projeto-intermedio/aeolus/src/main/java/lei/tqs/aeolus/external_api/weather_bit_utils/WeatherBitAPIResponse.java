@@ -20,4 +20,23 @@ public class WeatherBitAPIResponse {
     private String lat;
     private String country_code;
     private String state_code;
+
+    /**
+     * verify empty response
+     * @return
+     * true -> empty response
+     * false -> response not empty
+     */
+    public boolean empty() {
+        if (
+                city_name == null ||
+                        lon == null ||
+                        lat == null ||
+                        country_code == null ||
+                        state_code == null
+        )
+            return true;
+
+        return false;
+    }
 }

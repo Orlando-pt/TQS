@@ -10,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 class CacheStatsTest {
-    // TODO alterar nome dos testes
 
     private Cache<ImmutablePair, String> cache;
     private ImmutablePair<String, String> aveiro = new ImmutablePair<>("40.640506", "-8.653754");
@@ -36,17 +35,45 @@ class CacheStatsTest {
     }
 
     @Test
-    void percentageOfSuccessfulRequestsAnswered() {
+    void percentageOfSuccessfulRequestsAnsweredTest() {
         Mockito.when(stats.getRequests()).thenReturn(23l);
         Mockito.when(stats.getRequestsCachedAndAnswered()).thenReturn(8l);
 
         Assertions.assertThat(
                 this.cache.percentageOfSuccessfulRequestsAnswered()
         ).isEqualTo(34.78);
+
+        Mockito.verify(stats, Mockito.times(1)).getRequests();
+        Mockito.verify(stats, Mockito.times(1)).getRequestsCachedAndAnswered();
     }
 
     @Test
-    void mostRequested() {
+    void percentageOfSucessfulRequestsAnswered_withRealCacheStatsObjectTest() {
+        Cache<ImmutablePair, String> realCache = new Cache<>(2, 1, 10);
+
+        realCache.put(this.aveiro, "a very precise weather prevision");
+        realCache.put(this.lisboa, "another very good prevision of the weather");
+
+        simulate9RequestsToAveiro(realCache);
+
+        // check if in total there were 11 requests
+        Assertions.assertThat(
+                realCache.numberOfRequests()
+        ).isEqualTo(11L);
+
+        // 9 requests were answered with cache
+        Assertions.assertThat(
+                realCache.requestsAnswered()
+        ).isEqualTo(9L);
+
+        // and the percentage of requests answered is 81.82%
+        Assertions.assertThat(
+            realCache.percentageOfSuccessfulRequestsAnswered()
+        ).isEqualTo(81.82);
+    }
+
+    @Test
+    void mostRequestedTest() {
         // simulate requests to the cache
         simulateRequests();
 
@@ -62,6 +89,8 @@ class CacheStatsTest {
         Assertions.assertThat(
                 this.cache.requestsToKey(this.aveiro)
         ).isEqualTo(11l);
+
+        Mockito.verify(stats, Mockito.times(15)).incAnsweredRequests();
     }
 
     @Test
@@ -80,5 +109,11 @@ class CacheStatsTest {
         // simulate 5 requests to Lisboa
         for (i = 0; i < 5; i++)
             this.cache.get(this.lisboa);
+    }
+
+    private void simulate9RequestsToAveiro(Cache cache) {
+        var i = 0;
+        for (; i < 9; i++)
+            cache.get(this.aveiro);
     }
 }

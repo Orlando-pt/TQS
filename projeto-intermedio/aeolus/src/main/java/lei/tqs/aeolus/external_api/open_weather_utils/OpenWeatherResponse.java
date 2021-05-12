@@ -11,4 +11,20 @@ import java.util.List;
 public class OpenWeatherResponse {
     private Coordinate coord;
     private List<OpenWeatherData> list;
+
+    /**
+     * verify empty response
+     * if latitude and longitude aren't filled
+     * this counts as a empty response
+     * @return
+     */
+    public boolean empty() {
+        if (coord == null)
+            return true;
+
+        if (this.coord.empty())
+            return true;
+
+        return false;
+    }
 }

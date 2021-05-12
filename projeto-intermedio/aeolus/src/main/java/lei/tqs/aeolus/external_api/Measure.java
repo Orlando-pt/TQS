@@ -3,7 +3,7 @@ package lei.tqs.aeolus.external_api;
 import lombok.*;
 
 @Getter @Setter @ToString
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode
 public class Measure {
     private float co;
     private float no2;

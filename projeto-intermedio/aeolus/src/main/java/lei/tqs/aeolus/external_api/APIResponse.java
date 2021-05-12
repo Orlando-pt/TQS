@@ -20,4 +20,17 @@ public class APIResponse {
 
         this.measureList.add(measure);
     }
+
+    /**
+     * verify empty response
+     * if latitude and longitude aren't filled
+     * this counts as a empty response
+     * @return
+     */
+    public boolean empty() {
+        if (this.latitude == null || this.longitude == null)
+            return true;
+
+        return false;
+    }
 }

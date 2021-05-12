@@ -1,7 +1,10 @@
 package lei.tqs.aeolus.external_api.open_weather_utils;
 
+import lombok.extern.log4j.Log4j2;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+@Log4j2
 public class OpenWeatherRequest {
     /**
      * current:
@@ -30,14 +33,29 @@ public class OpenWeatherRequest {
     public OpenWeatherResponse getCurrentAQFromAPI(String lat, String lng) {
         String url = URL_CURRENT_AQ + lat + "&lon=" + lng + "&appid=" + API_KEY;
 
-        return this.restTemplate.getForObject(url, OpenWeatherResponse.class);
+        var openWeatherResponse = new OpenWeatherResponse();
+
+        try {
+            openWeatherResponse = this.restTemplate.getForObject(url, OpenWeatherResponse.class);
+        } catch (RestClientException e) {
+            log.error(e);
+        }
+        return openWeatherResponse;
     }
 
-    public OpenWeatherResponse getHistoryAQFromAPI(String lat, String lng) {
+    public OpenWeatherResponse getHistoryAQFromAPI(String lat, String lng, int days) {
+        // TODO understand how i can make this calculations
         var current = 1619456400;
         int start = 1619456400 - 3600;
         String url = URL_HISTORY_AQ + lat + "&lon=" + lng + "&start=" + start + "&end=" + current + "&appid=" + API_KEY;
 
-        return this.restTemplate.getForObject(url, OpenWeatherResponse.class);
+        var openWeatherResponse = new OpenWeatherResponse();
+
+        try {
+            openWeatherResponse = this.restTemplate.getForObject(url, OpenWeatherResponse.class);
+        } catch (RestClientException e) {
+            log.error(e);
+        }
+        return openWeatherResponse;
     }
 }

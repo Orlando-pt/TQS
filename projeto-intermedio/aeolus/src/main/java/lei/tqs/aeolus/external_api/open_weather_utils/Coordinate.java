@@ -9,8 +9,14 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-
 public class Coordinate {
     private String lon;
     private String lat;
+
+    public boolean empty() {
+        if (this.lon == null || this.lat == null)
+            return true;
+
+        return false;
+    }
 }
