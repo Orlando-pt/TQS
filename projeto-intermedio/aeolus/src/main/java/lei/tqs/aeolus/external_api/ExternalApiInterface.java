@@ -8,11 +8,7 @@ public interface ExternalApiInterface {
 
     APIResponse getHistoryAQPreviousDays(String lat, String lng, int days);
 
-    APIResponse getHistoryAQByDayAndHourUntilPresent(String lat, String lng, Calendar day, int hour);
+    APIResponse getHistoryAQByDayAndHourUntilPresent(String lat, String lng, Calendar day);
 
     APIResponse getHistoryAQBetweenDays(String lat, String lng, Calendar initial, Calendar end);
-
-    APIResponse getHistoryAQBetweenHours(String lat, String lng, Calendar day, int initial, int end);
-
-    APIResponse getHistoryAQBetweenDaysWithHours(String lat, String lng, Calendar initial, Calendar end, int initialHour, int finalHour);
 }

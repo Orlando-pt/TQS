@@ -12,22 +12,24 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Log4j2
 @ExtendWith(MockitoExtension.class)
 class OpenWeatherAPITest {
 
+    /**
+     * this tests are mainly to verify if the parsing
+     * between OpenWeatherResponse and APIResponse
+     * are done correctly
+     */
+
     @Mock
     OpenWeatherRequest openWeatherRequest;
 
     @InjectMocks
     OpenWeatherAPI openWeatherAPI;
-
-
-    @BeforeEach
-    void setUp() {
-    }
 
     @Test
     void getCurrentAQTest() {
@@ -62,8 +64,6 @@ class OpenWeatherAPITest {
     void getHistoryAQPreviousDaysTest() {
         OpenWeatherResponse openWeatherResponse = this.getObjectsOriginatedByTheAPIRequestHistory();
 
-        // TODO verificar o parâmetro dos 3 dias
-
         Mockito.when(
                 openWeatherRequest.getHistoryAQFromAPI("1", "2", 3)
         ).thenReturn(openWeatherResponse);
@@ -89,35 +89,6 @@ class OpenWeatherAPITest {
         Assertions.assertThat(
                 apiResponse.getMeasureList()
         ).contains(expectedMeasure, secondExpectedMeasure);
-    }
-
-    @Test
-    void getHistoryAQByDayAndHourUntilPresentTest() {
-        /**
-         * get historic data from a precise day and hour until the present
-         */
-
-    }
-
-    @Test
-    void getHistoryAQBetweenDaysTest() {
-        /**
-         * get historic data between two days
-         */
-    }
-
-    @Test
-    void getHistoryAQBetweenHoursTest() {
-        /**
-         * get historic data between hours on a determined day
-         */
-    }
-
-    @Test
-    void getHistoryAQBetweenDaysWithHoursTest() {
-        /**
-         * get historic data between days with the initial hour and final hour
-         */
     }
 
     /**

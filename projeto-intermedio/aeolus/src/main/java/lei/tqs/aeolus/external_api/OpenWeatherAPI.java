@@ -35,23 +35,28 @@ public class OpenWeatherAPI implements ExternalApiInterface{
     }
 
     @Override
-    public APIResponse getHistoryAQByDayAndHourUntilPresent(String lat, String lng, Calendar day, int hour) {
-        return null;
+    public APIResponse getHistoryAQByDayAndHourUntilPresent(String lat, String lng, Calendar day) {
+        var end = GeneralUtils.returnCalendarLastHourTimeUnix().getTimeInMillis() / 1000L;
+        return this.parseApiResponseToCommonResponse(
+                this.openWeatherRequest.getHistoryAQFromAPIStartEnd(
+                        lat,
+                        lng,
+                        day.getTimeInMillis() / 1000L,
+                        end
+                )
+        );
     }
 
     @Override
     public APIResponse getHistoryAQBetweenDays(String lat, String lng, Calendar initial, Calendar end) {
-        return null;
-    }
-
-    @Override
-    public APIResponse getHistoryAQBetweenHours(String lat, String lng, Calendar day, int initial, int end) {
-        return null;
-    }
-
-    @Override
-    public APIResponse getHistoryAQBetweenDaysWithHours(String lat, String lng, Calendar initial, Calendar end, int initialHour, int finalHour) {
-        return null;
+        return this.parseApiResponseToCommonResponse(
+                this.openWeatherRequest.getHistoryAQFromAPIStartEnd(
+                        lat,
+                        lng,
+                        initial.getTimeInMillis() / 1000L,
+                        end.getTimeInMillis() / 1000L
+                )
+        );
     }
 
     private APIResponse parseApiResponseToCommonResponse(OpenWeatherResponse response) {

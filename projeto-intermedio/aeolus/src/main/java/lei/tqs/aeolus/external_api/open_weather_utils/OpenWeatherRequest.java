@@ -5,6 +5,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Calendar;
+
 @Log4j2
 public class OpenWeatherRequest {
     /**
@@ -34,6 +36,8 @@ public class OpenWeatherRequest {
     public OpenWeatherResponse getCurrentAQFromAPI(String lat, String lng) {
         String url = URL_CURRENT_AQ + lat + "&lon=" + lng + "&appid=" + API_KEY;
 
+        log.info("Making request to OpenWeather api. Url : " + url);
+
         var openWeatherResponse = new OpenWeatherResponse();
 
         try {
@@ -45,11 +49,30 @@ public class OpenWeatherRequest {
     }
 
     public OpenWeatherResponse getHistoryAQFromAPI(String lat, String lng, int days) {
-        // TODO understand how i can make this calculations
-        var current = GeneralUtils.calculateCurrentDt();
-        int start = 1619456400 - 3600;
-        String url = URL_HISTORY_AQ + lat + "&lon=" + lng + "&start=" + start + "&end=" + current + "&appid=" + API_KEY;
 
+        var current = GeneralUtils.calculateCurrentDt();
+
+        var start = GeneralUtils.returnCalendarLastHourTimeUnix();
+        start.set(Calendar.DAY_OF_MONTH, Calendar.DAY_OF_MONTH - days);
+        var startTime = start.getTimeInMillis() / 1000L;
+
+        String url = URL_HISTORY_AQ + lat + "&lon=" + lng + "&start=" + startTime + "&end=" + current + "&appid=" + API_KEY;
+
+        log.info("Making request to OpenWeather api. Url : " + url);
+        var openWeatherResponse = new OpenWeatherResponse();
+
+        try {
+            openWeatherResponse = this.restTemplate.getForObject(url, OpenWeatherResponse.class);
+        } catch (RestClientException e) {
+            log.error(e);
+        }
+        return openWeatherResponse;
+    }
+
+    public OpenWeatherResponse getHistoryAQFromAPIStartEnd(String lat, String lng, long start, long end) {
+        String url = URL_HISTORY_AQ + lat + "&lon=" + lng + "&start=" + start + "&end=" + end + "&appid=" + API_KEY;
+
+        log.info("Making request to OpenWeather api. Url : " + url);
         var openWeatherResponse = new OpenWeatherResponse();
 
         try {

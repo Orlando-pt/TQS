@@ -45,6 +45,8 @@ public class WeatherBitRequest {
         String url = URL_CURRENT_AQ + lat + "&lon=" + lng + "&key=" + API_KEY;
         var weatherBitResponse = new WeatherBitAPIResponse();
 
+        log.info("Making request to WeatherBit api. Url : " + url);
+
         try {
             weatherBitResponse = this.restTemplate.getForObject(url, WeatherBitAPIResponse.class);
         } catch (RestClientException e) {
@@ -58,6 +60,7 @@ public class WeatherBitRequest {
         String url = URL_HISTORY_AQ + lat + "&lon=" + lng + "&key=" + API_KEY;
 
         var weatherBitResponse = new WeatherBitAPIResponse();
+        log.info("Making request to WeatherBit api. Url : " + url);
 
         try {
             weatherBitResponse = this.restTemplate.getForObject(url, WeatherBitAPIResponse.class);
