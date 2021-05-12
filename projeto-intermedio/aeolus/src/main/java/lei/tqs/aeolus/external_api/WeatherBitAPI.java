@@ -4,7 +4,7 @@ import lei.tqs.aeolus.external_api.weather_bit_utils.WeatherBitAPIResponse;
 import lei.tqs.aeolus.external_api.weather_bit_utils.WeatherBitRequest;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class WeatherBitAPI implements ExternalApiInterface{
 
@@ -25,22 +25,22 @@ public class WeatherBitAPI implements ExternalApiInterface{
     }
 
     @Override
-    public APIResponse getHistoryAQByDayAndHourUntilPresent(String lat, String lng, Date day, int hour) {
+    public APIResponse getHistoryAQByDayAndHourUntilPresent(String lat, String lng, Calendar day, int hour) {
         return null;
     }
 
     @Override
-    public APIResponse getHistoryAQBetweenDays(String lat, String lng, Date initial, Date end) {
+    public APIResponse getHistoryAQBetweenDays(String lat, String lng, Calendar initial, Calendar end) {
         return null;
     }
 
     @Override
-    public APIResponse getHistoryAQBetweenHours(String lat, String lng, Date day, int initial, int end) {
+    public APIResponse getHistoryAQBetweenHours(String lat, String lng, Calendar day, int initial, int end) {
         return null;
     }
 
     @Override
-    public APIResponse getHistoryAQBetweenDaysWithHours(String lat, String lng, Date initial, Date end, int initialHour, int finalHour) {
+    public APIResponse getHistoryAQBetweenDaysWithHours(String lat, String lng, Calendar initial, Calendar end, int initialHour, int finalHour) {
         return null;
     }
 
@@ -65,7 +65,9 @@ public class WeatherBitAPI implements ExternalApiInterface{
                             measure.getNo2(),
                             measure.getO3(),
                             measure.getSo2(),
-                            measure.getPm10()
+                            measure.getPm10(),
+                            measure.getTimestamp_local() == null ?
+                                    Calendar.getInstance() : measure.getTimestamp_local()
                     )
             );
         });

@@ -1,5 +1,6 @@
 package lei.tqs.aeolus.external_api.open_weather_utils;
 
+import lei.tqs.aeolus.utils.GeneralUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -45,7 +46,7 @@ public class OpenWeatherRequest {
 
     public OpenWeatherResponse getHistoryAQFromAPI(String lat, String lng, int days) {
         // TODO understand how i can make this calculations
-        var current = 1619456400;
+        var current = GeneralUtils.calculateCurrentDt();
         int start = 1619456400 - 3600;
         String url = URL_HISTORY_AQ + lat + "&lon=" + lng + "&start=" + start + "&end=" + current + "&appid=" + API_KEY;
 

@@ -1,6 +1,6 @@
 package lei.tqs.aeolus.external_api;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public interface ExternalApiInterface {
 
@@ -8,11 +8,11 @@ public interface ExternalApiInterface {
 
     APIResponse getHistoryAQPreviousDays(String lat, String lng, int days);
 
-    APIResponse getHistoryAQByDayAndHourUntilPresent(String lat, String lng, Date day, int hour);
+    APIResponse getHistoryAQByDayAndHourUntilPresent(String lat, String lng, Calendar day, int hour);
 
-    APIResponse getHistoryAQBetweenDays(String lat, String lng, Date initial, Date end);
+    APIResponse getHistoryAQBetweenDays(String lat, String lng, Calendar initial, Calendar end);
 
-    APIResponse getHistoryAQBetweenHours(String lat, String lng, Date day, int initial, int end);
+    APIResponse getHistoryAQBetweenHours(String lat, String lng, Calendar day, int initial, int end);
 
-    APIResponse getHistoryAQBetweenDaysWithHours(String lat, String lng, Date initial, Date end, int initialHour, int finalHour);
+    APIResponse getHistoryAQBetweenDaysWithHours(String lat, String lng, Calendar initial, Calendar end, int initialHour, int finalHour);
 }

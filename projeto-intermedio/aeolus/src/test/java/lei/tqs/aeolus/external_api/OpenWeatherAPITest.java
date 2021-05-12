@@ -1,6 +1,7 @@
 package lei.tqs.aeolus.external_api;
 
 import lei.tqs.aeolus.external_api.open_weather_utils.*;
+import lei.tqs.aeolus.utils.GeneralUtils;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,7 +52,7 @@ class OpenWeatherAPITest {
         ).isEqualTo("-8.6457");
 
         // expected measure
-        var expectedMeasure = new Measure(188.59f, 0.92f, 121.59f, 1.48f, 4.1f);
+        var expectedMeasure = new Measure(188.59f, 0.92f, 121.59f, 1.48f, 4.1f, GeneralUtils.returnCalendarOfTimeUnix(1619982000L));
         Assertions.assertThat(
                 apiResponse.getMeasureList()
         ).contains(expectedMeasure);
@@ -61,28 +62,62 @@ class OpenWeatherAPITest {
     void getHistoryAQPreviousDaysTest() {
         OpenWeatherResponse openWeatherResponse = this.getObjectsOriginatedByTheAPIRequestHistory();
 
+        // TODO verificar o parâmetro dos 3 dias
+
         Mockito.when(
                 openWeatherRequest.getHistoryAQFromAPI("1", "2", 3)
         ).thenReturn(openWeatherResponse);
 
         var apiResponse = this.openWeatherAPI.getHistoryAQPreviousDays("1", "2", 3);
+
+        log.info(apiResponse);
+
+        /**
+         * verify if all the fields are correct
+         */
+        Assertions.assertThat(apiResponse.getLatitude())
+                .isEqualTo("1");
+
+        Assertions.assertThat(
+                apiResponse.getLongitude()
+        ).isEqualTo("2");
+
+        // expected measure
+        var expectedMeasure = new Measure(188.59f, 0.92f, 121.59f, 1.48f, 4.1f, GeneralUtils.returnCalendarOfTimeUnix(1619982000L));
+        var secondExpectedMeasure = new Measure(180.59f, 0.90f, 120.50f, 1.08f, 3.5f, GeneralUtils.returnCalendarOfTimeUnix(1619962000L));
+
+        Assertions.assertThat(
+                apiResponse.getMeasureList()
+        ).contains(expectedMeasure, secondExpectedMeasure);
     }
 
     @Test
-    void getHistoryAQByDayAndHourUntilPresent() {
-        
+    void getHistoryAQByDayAndHourUntilPresentTest() {
+        /**
+         * get historic data from a precise day and hour until the present
+         */
+
     }
 
     @Test
-    void getHistoryAQBetweenDays() {
+    void getHistoryAQBetweenDaysTest() {
+        /**
+         * get historic data between two days
+         */
     }
 
     @Test
-    void getHistoryAQBetweenHours() {
+    void getHistoryAQBetweenHoursTest() {
+        /**
+         * get historic data between hours on a determined day
+         */
     }
 
     @Test
-    void getHistoryAQBetweenDaysWithHours() {
+    void getHistoryAQBetweenDaysWithHoursTest() {
+        /**
+         * get historic data between days with the initial hour and final hour
+         */
     }
 
     /**
@@ -109,7 +144,7 @@ class OpenWeatherAPITest {
         var openWeatherResponse = new OpenWeatherResponse();
 
         // set coordinates
-        openWeatherResponse.setCoord(new Coordinate("-8.6457", "40.8661"));
+        openWeatherResponse.setCoord(new Coordinate("2", "1"));
 
         // set measures
         var list = List.of(new OpenWeatherData(
@@ -124,4 +159,5 @@ class OpenWeatherAPITest {
 
         return openWeatherResponse;
     }
+
 }

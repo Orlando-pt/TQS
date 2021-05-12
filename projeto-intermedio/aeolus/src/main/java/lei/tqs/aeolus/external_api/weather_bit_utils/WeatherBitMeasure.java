@@ -17,5 +17,5 @@ public class WeatherBitMeasure {
     private float o3;
     private float so2;
     private float pm10;
-    private Calendar timestamp_utc;
+    private Calendar timestamp_local;
 }

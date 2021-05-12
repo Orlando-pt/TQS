@@ -2,8 +2,9 @@ package lei.tqs.aeolus.external_api;
 
 import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherRequest;
 import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherResponse;
+import lei.tqs.aeolus.utils.GeneralUtils;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class OpenWeatherAPI implements ExternalApiInterface{
 
@@ -28,26 +29,28 @@ public class OpenWeatherAPI implements ExternalApiInterface{
 
     @Override
     public APIResponse getHistoryAQPreviousDays(String lat, String lng, int days) {
+        return this.parseApiResponseToCommonResponse(
+                this.openWeatherRequest.getHistoryAQFromAPI(lat, lng, days)
+        );
+    }
+
+    @Override
+    public APIResponse getHistoryAQByDayAndHourUntilPresent(String lat, String lng, Calendar day, int hour) {
         return null;
     }
 
     @Override
-    public APIResponse getHistoryAQByDayAndHourUntilPresent(String lat, String lng, Date day, int hour) {
+    public APIResponse getHistoryAQBetweenDays(String lat, String lng, Calendar initial, Calendar end) {
         return null;
     }
 
     @Override
-    public APIResponse getHistoryAQBetweenDays(String lat, String lng, Date initial, Date end) {
+    public APIResponse getHistoryAQBetweenHours(String lat, String lng, Calendar day, int initial, int end) {
         return null;
     }
 
     @Override
-    public APIResponse getHistoryAQBetweenHours(String lat, String lng, Date day, int initial, int end) {
-        return null;
-    }
-
-    @Override
-    public APIResponse getHistoryAQBetweenDaysWithHours(String lat, String lng, Date initial, Date end, int initialHour, int finalHour) {
+    public APIResponse getHistoryAQBetweenDaysWithHours(String lat, String lng, Calendar initial, Calendar end, int initialHour, int finalHour) {
         return null;
     }
 
@@ -72,7 +75,10 @@ public class OpenWeatherAPI implements ExternalApiInterface{
                                     measure.getComponents().getNo2(),
                                     measure.getComponents().getO3(),
                                     measure.getComponents().getSo2(),
-                                    measure.getComponents().getPm10()
+                                    measure.getComponents().getPm10(),
+                                    GeneralUtils.returnCalendarOfTimeUnix(
+                                            measure.getDt()
+                                    )
                             )
                     );
                 }
@@ -80,5 +86,6 @@ public class OpenWeatherAPI implements ExternalApiInterface{
 
         return apiResponse;
     }
+
 
 }

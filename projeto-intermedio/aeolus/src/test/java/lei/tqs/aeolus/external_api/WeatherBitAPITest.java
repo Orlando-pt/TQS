@@ -3,6 +3,7 @@ package lei.tqs.aeolus.external_api;
 import lei.tqs.aeolus.external_api.weather_bit_utils.WeatherBitAPIResponse;
 import lei.tqs.aeolus.external_api.weather_bit_utils.WeatherBitMeasure;
 import lei.tqs.aeolus.external_api.weather_bit_utils.WeatherBitRequest;
+import lei.tqs.aeolus.utils.GeneralUtils;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -57,7 +58,7 @@ class WeatherBitAPITest {
         ).isEqualTo("-8.63");
 
             // expected measure
-        var expectedMeasure = new Measure(253.5f, 24.9f, 108.0f, 21.0f, 45.0f);
+        var expectedMeasure = new Measure(253.5f, 24.9f, 108.0f, 21.0f, 45.0f, GeneralUtils.returnCalendarLastHourTimeUnix());
         Assertions.assertThat(
                 apiResponse.getMeasureList()
         ).contains(expectedMeasure);
@@ -101,7 +102,7 @@ class WeatherBitAPITest {
 
         // set measures
         var data = List.of(new WeatherBitMeasure(
-                253.5f, 24.9f, 108.0f, 21.0f, 45.0f, null
+                253.5f, 24.9f, 108.0f, 21.0f, 45.0f, GeneralUtils.returnCalendarLastHourTimeUnix()
         ));
         weatherBitAPIResponse.setData(data);
 

@@ -2,6 +2,8 @@ package lei.tqs.aeolus.external_api;
 
 import lombok.*;
 
+import java.util.Calendar;
+
 @Getter @Setter @ToString
 @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode
 public class Measure {
@@ -10,4 +12,5 @@ public class Measure {
     private float o3;
     private float so2;
     private float pm10;
+    private Calendar timestamp;
 }
