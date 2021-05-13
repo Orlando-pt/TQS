@@ -16,8 +16,8 @@ public class WebController {
     @GetMapping("/airquality")
     @ResponseBody
     public String getAirQuality(@RequestParam String latitude, @RequestParam String longitude) {
-        log.error("Received latitude: " + latitude);
-        log.error("Received longitude: " + longitude);
+        log.info("Received latitude: " + latitude);
+        log.info("Received longitude: " + longitude);
         return "air_quality.html";
     }
 

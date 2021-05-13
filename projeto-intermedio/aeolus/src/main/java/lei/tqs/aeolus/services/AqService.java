@@ -42,12 +42,16 @@ public class AqService implements AqServiceInterface{
 
         // if not, request air quality to openweather api
         var openWeatherResponse = this.openWeatherAPI.getCurrentAQ(lat, lng);
-        if (!openWeatherResponse.empty())
+        if (!openWeatherResponse.empty()) {
+            this.cache.put(location, openWeatherResponse);
             return openWeatherResponse;
+        }
+
 
         // if error, request air quality to weatherbit api
         var weatherBitResponse = this.weatherBitAPI.getCurrentAQ(lat, lng);
         if (!weatherBitResponse.empty()) {
+            this.cache.put(location, weatherBitResponse);
             return weatherBitResponse;
         }
 
