@@ -22,21 +22,11 @@ public class AqService implements AqServiceInterface{
     private OpenWeatherAPI openWeatherAPI;
     private WeatherBitAPI weatherBitAPI;
 
-//    public AqService() {
-//        this.cache = new Cache<>(300, 120, 10000);
-//        this.openWeatherAPI = new OpenWeatherAPI(new OpenWeatherRequest());
-//        this.weatherBitAPI = new WeatherBitAPI(new WeatherBitRequest());
-//    }
-//
-//    public AqService(Cache cache,OpenWeatherAPI openWeatherAPI, WeatherBitAPI weatherBitAPI) {
-//        this.cache = cache;
-//        this.openWeatherAPI = openWeatherAPI;
-//        this.weatherBitAPI = weatherBitAPI;
-//    }
-
-    public void setCache(Cache cache) {this.cache = cache; }
-    public void setOpenWeatherAPI(OpenWeatherAPI openWeatherAPI) {this.openWeatherAPI = openWeatherAPI; }
-    public void setWeatherBitAPI(WeatherBitAPI weatherBitAPI) {this.weatherBitAPI = weatherBitAPI; }
+    public AqService() {
+        this.cache = new Cache<>(300, 120, 10000);
+        this.openWeatherAPI = new OpenWeatherAPI(new OpenWeatherRequest());
+        this.weatherBitAPI = new WeatherBitAPI(new WeatherBitRequest());
+    }
 
     @Override
     public APIResponse getCurrentAQ(String lat, String lng) {
@@ -49,6 +39,11 @@ public class AqService implements AqServiceInterface{
             return result.get();
 
         // if not, request air quality to openweather api
+        var openWeatherResponse = this.openWeatherAPI.getCurrentAQ(lat, lng);
+        if (!openWeatherResponse.empty())
+            return openWeatherResponse;
+
+        // TODO verificar se não há resposta porque enviaram más coordenadas
 
         // if error, request air quality to weatherbit api
 
