@@ -3,9 +3,11 @@ package lei.tqs.aeolus.external_api;
 import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherRequest;
 import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherResponse;
 import lei.tqs.aeolus.utils.GeneralUtils;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.Calendar;
 
+@Log4j2
 public class OpenWeatherAPI implements ExternalApiInterface{
 
     /**
@@ -22,14 +24,14 @@ public class OpenWeatherAPI implements ExternalApiInterface{
 
     @Override
     public APIResponse getCurrentAQ(String lat, String lng) {
-        return parseApiResponseToCommonResponse(
+        return parseApiResponseToCommonResponse(lat, lng,
                 this.openWeatherRequest.getCurrentAQFromAPI(lat, lng)
         );
     }
 
     @Override
     public APIResponse getHistoryAQPreviousDays(String lat, String lng, int days) {
-        return this.parseApiResponseToCommonResponse(
+        return this.parseApiResponseToCommonResponse(lat, lng,
                 this.openWeatherRequest.getHistoryAQFromAPI(lat, lng, days)
         );
     }
@@ -37,7 +39,7 @@ public class OpenWeatherAPI implements ExternalApiInterface{
     @Override
     public APIResponse getHistoryAQByDayAndHourUntilPresent(String lat, String lng, Calendar day) {
         var end = GeneralUtils.returnCalendarLastHourTimeUnix().getTimeInMillis() / 1000L;
-        return this.parseApiResponseToCommonResponse(
+        return this.parseApiResponseToCommonResponse(lat, lng,
                 this.openWeatherRequest.getHistoryAQFromAPIStartEnd(
                         lat,
                         lng,
@@ -49,7 +51,7 @@ public class OpenWeatherAPI implements ExternalApiInterface{
 
     @Override
     public APIResponse getHistoryAQBetweenDays(String lat, String lng, Calendar initial, Calendar end) {
-        return this.parseApiResponseToCommonResponse(
+        return this.parseApiResponseToCommonResponse(lat, lng,
                 this.openWeatherRequest.getHistoryAQFromAPIStartEnd(
                         lat,
                         lng,
@@ -59,7 +61,8 @@ public class OpenWeatherAPI implements ExternalApiInterface{
         );
     }
 
-    private APIResponse parseApiResponseToCommonResponse(OpenWeatherResponse response) {
+    private APIResponse parseApiResponseToCommonResponse(
+            String lat, String lng, OpenWeatherResponse response) {
         APIResponse apiResponse = new APIResponse();
 
         /**
@@ -69,8 +72,8 @@ public class OpenWeatherAPI implements ExternalApiInterface{
             return apiResponse;
 
         // set coordinates
-        apiResponse.setLatitude(response.getCoord().getLat());
-        apiResponse.setLongitude(response.getCoord().getLon());
+        apiResponse.setLatitude(lat);
+        apiResponse.setLongitude(lng);
 
         // add measures
         response.getList().forEach( (measure) -> {

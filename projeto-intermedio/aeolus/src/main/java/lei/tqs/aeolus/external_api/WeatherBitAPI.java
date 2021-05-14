@@ -17,7 +17,7 @@ public class WeatherBitAPI implements ExternalApiInterface{
 
     @Override
     public APIResponse getCurrentAQ(String lat, String lng) {
-        return this.parseApiResponseToCommonResponse(
+        return this.parseApiResponseToCommonResponse(lat, lng,
                 this.weatherBitRequest.getCurrentDataFromAPI(lat, lng)
         );
     }
@@ -42,7 +42,7 @@ public class WeatherBitAPI implements ExternalApiInterface{
 
         weatherBitAPIResponse.setData(measures);
 
-        return this.parseApiResponseToCommonResponse(
+        return this.parseApiResponseToCommonResponse(lat, lng,
             weatherBitAPIResponse
         );
     }
@@ -67,7 +67,7 @@ public class WeatherBitAPI implements ExternalApiInterface{
 
         weatherBitAPIResponse.setData(measures);
 
-        return this.parseApiResponseToCommonResponse(
+        return this.parseApiResponseToCommonResponse(lat, lng,
                 weatherBitAPIResponse
         );
     }
@@ -95,12 +95,13 @@ public class WeatherBitAPI implements ExternalApiInterface{
 
         weatherBitAPIResponse.setData(measures);
 
-        return this.parseApiResponseToCommonResponse(
+        return this.parseApiResponseToCommonResponse(lat, lng,
                 weatherBitAPIResponse
         );
     }
 
-    private APIResponse parseApiResponseToCommonResponse(WeatherBitAPIResponse response) {
+    private APIResponse parseApiResponseToCommonResponse(
+            String lat, String lng, WeatherBitAPIResponse response) {
         var apiResponse = new APIResponse();
 
         /**
@@ -110,8 +111,8 @@ public class WeatherBitAPI implements ExternalApiInterface{
             return apiResponse;
 
         // set coordinates
-        apiResponse.setLatitude(response.getLat());
-        apiResponse.setLongitude(response.getLon());
+        apiResponse.setLatitude(lat);
+        apiResponse.setLongitude(lng);
 
         // add measures
         response.getData().forEach( (measure) -> {

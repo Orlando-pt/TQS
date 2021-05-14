@@ -39,4 +39,16 @@ public class GeneralUtils {
         }
         return false;
     }
+
+    public static String cropCoordinate(String field) {
+        if (!field.contains("."))
+            return field;
+
+        var values = field.split("\\.");
+
+        if (values[1].length() <= 4)
+            return field;
+
+        return values[0] + "." + values[1].substring(0, 4);
+    }
 }

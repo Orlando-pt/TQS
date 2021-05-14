@@ -57,7 +57,7 @@ public class OpenWeatherRequest {
         var current = GeneralUtils.calculateCurrentDt();
 
         var start = GeneralUtils.returnCalendarLastHourTimeUnix();
-        start.set(Calendar.DAY_OF_MONTH, Calendar.DAY_OF_MONTH - days);
+        start.add(Calendar.DAY_OF_MONTH, -days);
         var startTime = start.getTimeInMillis() / 1000L;
 
         String url = URL_HISTORY_AQ + lat + "&lon=" + lng + "&start=" + startTime + "&end=" + current + "&appid=" + API_KEY;

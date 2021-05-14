@@ -25,4 +25,6 @@ public interface AqServiceInterface {
     long cacheRequestsToLocation(ImmutablePair<String, String> location);
     ImmutablePair<String, String> cacheMostRequestedLocation();
     double cachePercentageSuccessfulRequestsAnswered();
+
+    void resetCache();
 }

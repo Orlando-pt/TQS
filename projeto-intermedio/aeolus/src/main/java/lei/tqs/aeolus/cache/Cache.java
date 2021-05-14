@@ -50,7 +50,6 @@ public class Cache<K, V> implements CacheInterface<K, V> {
     public void put(K key, V value) {
         synchronized (this.cacheMap) {
             log.info("Storing on cache: " + value);
-            this.stats.incRequests();
             this.cacheMap.put(key, new CacheObject<>(value));
         }
     }
@@ -58,7 +57,6 @@ public class Cache<K, V> implements CacheInterface<K, V> {
     @Override
     public Optional<V> get(K key) {
         synchronized (this.cacheMap) {
-            log.info("Retrieving from cache the location (" + key + ")");
             CacheObject<V> object = this.cacheMap.get(key);
 
             if (object == null) {
@@ -66,6 +64,7 @@ public class Cache<K, V> implements CacheInterface<K, V> {
 
                 return Optional.empty();
             } else {
+                log.info("Retrieving from cache the location (" + key + ")");
                 this.stats.incAnsweredRequests();
 
                 object.accessed(System.currentTimeMillis());

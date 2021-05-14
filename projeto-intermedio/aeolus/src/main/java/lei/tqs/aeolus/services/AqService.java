@@ -6,6 +6,7 @@ import lei.tqs.aeolus.external_api.OpenWeatherAPI;
 import lei.tqs.aeolus.external_api.WeatherBitAPI;
 import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherRequest;
 import lei.tqs.aeolus.external_api.weather_bit_utils.WeatherBitRequest;
+import lei.tqs.aeolus.utils.GeneralUtils;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.stereotype.Service;
@@ -28,9 +29,17 @@ public class AqService implements AqServiceInterface{
     }
 
     @Override
+    public void resetCache() {
+        this.cache = new Cache<>(300, 120, 10000);
+    }
+
+    @Override
     public APIResponse getCurrentAQ(String lat, String lng) {
         if (!this.correctCoordinates(lat, lng))
             return new APIResponse();
+
+        lat = GeneralUtils.cropCoordinate(lat);
+        lng = GeneralUtils.cropCoordinate(lng);
 
         log.info("Getting current air quality on location (" + lat + "," + lng + ")");
         var location = ImmutablePair.of(lat, lng);
@@ -64,6 +73,9 @@ public class AqService implements AqServiceInterface{
         if (!this.correctCoordinates(lat, lng))
             return new APIResponse();
 
+        lat = GeneralUtils.cropCoordinate(lat);
+        lng = GeneralUtils.cropCoordinate(lng);
+
         log.info("Getting history air quality on location (" + lat + "," + lng + ")");
         var openWeatherResponse = this.openWeatherAPI.getHistoryAQPreviousDays(
                 lat, lng, days);
@@ -82,6 +94,9 @@ public class AqService implements AqServiceInterface{
     public APIResponse getHistoryAQByDayAndHourUntilPresent(String lat, String lng, Calendar day) {
         if (!this.correctCoordinates(lat, lng))
             return new APIResponse();
+
+        lat = GeneralUtils.cropCoordinate(lat);
+        lng = GeneralUtils.cropCoordinate(lng);
 
         log.info("Getting history air quality since " + day.getTime() +
                 " on location (" + lat + "," + lng + ")");
@@ -102,6 +117,9 @@ public class AqService implements AqServiceInterface{
     public APIResponse getHistoryAQBetweenDays(String lat, String lng, Calendar initial, Calendar end) {
         if (!this.correctCoordinates(lat, lng))
             return new APIResponse();
+
+        lat = GeneralUtils.cropCoordinate(lat);
+        lng = GeneralUtils.cropCoordinate(lng);
 
         log.info("Getting history air quality since " + initial.getTime() +
                 " until " + end.getTime() +
@@ -145,9 +163,13 @@ public class AqService implements AqServiceInterface{
 
     @Override
     public boolean cacheContainsLocation(ImmutablePair<String, String> location) {
-        log.info("Verifying if the coordinate (" + location.getLeft() +
-                "," + location.getRight() + " is stored on cache");
-        return this.cache.containsKey(location);
+        var locationAfterCrop = ImmutablePair.of(
+                GeneralUtils.cropCoordinate(location.getLeft()),
+                GeneralUtils.cropCoordinate(location.getRight())
+        );
+        log.info("Verifying if the coordinate (" + locationAfterCrop.getLeft() +
+                "," + locationAfterCrop.getRight() + " is stored on cache");
+        return this.cache.containsKey(locationAfterCrop);
     }
 
     @Override
@@ -164,10 +186,14 @@ public class AqService implements AqServiceInterface{
 
     @Override
     public long cacheRequestsToLocation(ImmutablePair<String, String> location) {
-        log.info("Verifying how many requests were made with the coordinate (" + location.getLeft() +
-                "," + location.getRight() + " stored on cache");
+        var locationAfterCrop = ImmutablePair.of(
+                GeneralUtils.cropCoordinate(location.getLeft()),
+                GeneralUtils.cropCoordinate(location.getRight())
+        );
+        log.info("Verifying how many requests were made with the coordinate (" + locationAfterCrop.getLeft() +
+                "," + locationAfterCrop.getRight() + " stored on cache");
 
-        return this.cache.requestsToKey(location);
+        return this.cache.requestsToKey(locationAfterCrop);
     }
 
     @Override

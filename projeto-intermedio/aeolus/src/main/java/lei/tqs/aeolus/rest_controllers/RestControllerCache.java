@@ -1,6 +1,7 @@
 package lei.tqs.aeolus.rest_controllers;
 
 import lei.tqs.aeolus.services.AqServiceInterface;
+import lei.tqs.aeolus.utils.GeneralUtils;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,8 @@ public class RestControllerCache {
     @ResponseBody
     public Boolean getCacheContainsLocation(@RequestParam String lat, @RequestParam String lng) {
         log.info("Request at: /api/cache/cachecontains");
-        return this.aqService.cacheContainsLocation(ImmutablePair.of(lat, lng));
+        return this.aqService.cacheContainsLocation(ImmutablePair.of(
+                GeneralUtils.cropCoordinate(lat), GeneralUtils.cropCoordinate(lng)));
     }
 
     @GetMapping("/cacherequestsasked")
@@ -63,7 +65,9 @@ public class RestControllerCache {
     @ResponseBody
     public Long getCacheRequestsToLocation(@RequestParam String lat, @RequestParam String lng) {
         log.info("Request at: /api/cache/cacherequestsonlocation");
-        return this.aqService.cacheRequestsToLocation(ImmutablePair.of(lat, lng));
+        return this.aqService.cacheRequestsToLocation(ImmutablePair.of(
+                GeneralUtils.cropCoordinate(lat), GeneralUtils.cropCoordinate(lng))
+        );
     }
 
     @GetMapping("/cachemostrequestedlocation")

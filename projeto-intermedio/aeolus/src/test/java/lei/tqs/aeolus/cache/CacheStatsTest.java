@@ -23,7 +23,9 @@ class CacheStatsTest {
 
         this.cache = new Cache<ImmutablePair, String>(2, 1, 10);
 
+        this.cache.get(this.aveiro);
         this.cache.put(this.aveiro, "a very precise weather prevision");
+        this.cache.get(this.lisboa);
         this.cache.put(this.lisboa, "another very good prevision of the weather");
 
         this.cache.setCacheStats(stats);
@@ -51,7 +53,9 @@ class CacheStatsTest {
     void percentageOfSucessfulRequestsAnswered_withRealCacheStatsObjectTest() {
         Cache<ImmutablePair, String> realCache = new Cache<>(2, 1, 10);
 
+        realCache.get(this.aveiro);
         realCache.put(this.aveiro, "a very precise weather prevision");
+        realCache.get(this.lisboa);
         realCache.put(this.lisboa, "another very good prevision of the weather");
 
         simulate9RequestsToAveiro(realCache);
@@ -85,7 +89,7 @@ class CacheStatsTest {
                 mostRequested
         ).isEqualTo(this.aveiro);
 
-        // verify if Aveiro was requested exactly 10 times
+        // verify if Aveiro was requested exactly 11 times
         Assertions.assertThat(
                 this.cache.requestsToKey(this.aveiro)
         ).isEqualTo(11l);
