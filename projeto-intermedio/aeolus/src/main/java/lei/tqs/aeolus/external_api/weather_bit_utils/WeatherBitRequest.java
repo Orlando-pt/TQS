@@ -1,5 +1,7 @@
 package lei.tqs.aeolus.external_api.weather_bit_utils;
 
+import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherResponse;
+import lei.tqs.aeolus.utils.GeneralUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -42,6 +44,8 @@ public class WeatherBitRequest {
     }
 
     public WeatherBitAPIResponse getCurrentDataFromAPI(String lat, String lng) {
+        if (!GeneralUtils.verifyLatitude(lat) || !GeneralUtils.verifyLongitude(lng))
+            return new WeatherBitAPIResponse();
         String url = URL_CURRENT_AQ + lat + "&lon=" + lng + "&key=" + API_KEY;
         var weatherBitResponse = new WeatherBitAPIResponse();
 
@@ -57,6 +61,8 @@ public class WeatherBitRequest {
     }
 
     public WeatherBitAPIResponse getHistoryDataFromAPI(String lat, String lng) {
+        if (!GeneralUtils.verifyLatitude(lat) || !GeneralUtils.verifyLongitude(lng))
+            return new WeatherBitAPIResponse();
         String url = URL_HISTORY_AQ + lat + "&lon=" + lng + "&key=" + API_KEY;
 
         var weatherBitResponse = new WeatherBitAPIResponse();

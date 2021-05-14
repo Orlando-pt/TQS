@@ -34,6 +34,9 @@ public class OpenWeatherRequest {
     }
 
     public OpenWeatherResponse getCurrentAQFromAPI(String lat, String lng) {
+        if (!GeneralUtils.verifyLatitude(lat) || !GeneralUtils.verifyLongitude(lng))
+            return new OpenWeatherResponse();
+
         String url = URL_CURRENT_AQ + lat + "&lon=" + lng + "&appid=" + API_KEY;
 
         log.info("Making request to OpenWeather api. Url : " + url);
@@ -49,7 +52,8 @@ public class OpenWeatherRequest {
     }
 
     public OpenWeatherResponse getHistoryAQFromAPI(String lat, String lng, int days) {
-
+        if (!GeneralUtils.verifyLatitude(lat) || !GeneralUtils.verifyLongitude(lng))
+            return new OpenWeatherResponse();
         var current = GeneralUtils.calculateCurrentDt();
 
         var start = GeneralUtils.returnCalendarLastHourTimeUnix();
@@ -70,6 +74,8 @@ public class OpenWeatherRequest {
     }
 
     public OpenWeatherResponse getHistoryAQFromAPIStartEnd(String lat, String lng, long start, long end) {
+        if (!GeneralUtils.verifyLatitude(lat) || !GeneralUtils.verifyLongitude(lng))
+            return new OpenWeatherResponse();
         String url = URL_HISTORY_AQ + lat + "&lon=" + lng + "&start=" + start + "&end=" + end + "&appid=" + API_KEY;
 
         log.info("Making request to OpenWeather api. Url : " + url);

@@ -25,4 +25,22 @@ public class GeneralUtils {
 
         return calendar.getTimeInMillis() / 1000L;
     }
+
+    public static boolean verifyLatitude(String field) {
+        try {
+            if (Math.abs(Double.parseDouble(field)) <= 90)
+                return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    public static boolean verifyLongitude(String field) {
+        try {
+            if (Math.abs(Double.parseDouble(field)) <= 180)
+                return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
 }
