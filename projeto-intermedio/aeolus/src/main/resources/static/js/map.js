@@ -71,6 +71,13 @@ const updateMap = async () => {
     const country = document.getElementById('input_country').value;
     const city = document.getElementById('input_city').value;
 
+    document.getElementById('form_country').value = country;
+    document.getElementById('form_city').value = city;
+
+
+    document.getElementById('form_country1').value = country;
+    document.getElementById('form_city1').value = city;
+
     // call google api to make coordinates resolution with given city
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${city},%20${country}&key=AIzaSyCPzw45SG9x0XQS6cxU6lINfEVSxuJ1g6s`;
 
