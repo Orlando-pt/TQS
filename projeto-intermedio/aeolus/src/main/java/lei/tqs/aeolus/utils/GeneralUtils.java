@@ -18,11 +18,7 @@ public class GeneralUtils {
     }
 
     public static long calculateCurrentDt() {
-        var calendar = Calendar.getInstance();
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
+        var calendar = returnCalendarLastHourTimeUnix();
         return calendar.getTimeInMillis() / 1000L;
     }
 
