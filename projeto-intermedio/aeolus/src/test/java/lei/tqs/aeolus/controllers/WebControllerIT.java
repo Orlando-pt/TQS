@@ -1,20 +1,20 @@
 package lei.tqs.aeolus.controllers;
 
-import io.github.bonigarcia.seljup.SeleniumJupiter;
 import lombok.extern.log4j.Log4j2;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.util.List;
 
 @Log4j2
-@ExtendWith(SeleniumJupiter.class)
 class WebControllerIT {
 
     /**
@@ -23,38 +23,48 @@ class WebControllerIT {
      * @param driver
      */
 
+    private WebDriver driver;
+
+    @BeforeEach
+    void setUp() {
+        var options = new FirefoxOptions();
+        options.setHeadless(true);
+
+        this.driver = new FirefoxDriver(options);
+    }
+
     @Test
-    void testCurrentAirQualityWorkFlow(FirefoxDriver driver) {
-        driver.get("https://tqs-mid-term-project.ew.r.appspot.com/");
-        driver.findElement(By.id("input_city")).click();
-        driver.findElement(By.id("input_city")).clear();
-        driver.findElement(By.id("input_city")).sendKeys("Porto");
-        driver.findElement(By.id("select_city")).click();
-        driver.findElement(By.cssSelector(".col > form > input:nth-child(5)")).click();
-        MatcherAssert.assertThat(driver.findElement(By.cssSelector("h1")).getText(), Matchers.is("Current air quality in Porto"));
+    void testCurrentAirQualityWorkFlow() {
+        this.driver.get("https://tqs-mid-term-project.ew.r.appspot.com/");
+        this.driver.findElement(By.id("input_city")).click();
+        this.driver.findElement(By.id("input_city")).clear();
+        this.driver.findElement(By.id("input_city")).sendKeys("Porto");
+        this.driver.findElement(By.id("select_city")).click();
+        this.driver.findElement(By.cssSelector(".col > form > input:nth-child(5)")).click();
+        MatcherAssert.assertThat(this.driver.findElement(By.cssSelector("h1")).getText(), Matchers.is("Current air quality in Porto"));
         {
-            List<WebElement> elements = driver.findElements(By.cssSelector("tbody th"));
+            List<WebElement> elements = this.driver.findElements(By.cssSelector("tbody th"));
             assert(elements.size() > 0);
         }
     }
 
     @Test
-    void testHistoryAirQualityWorkFlow(FirefoxDriver driver) {
-        driver.get("https://tqs-mid-term-project.ew.r.appspot.com/");
-        driver.findElement(By.id("input_city")).click();
-        driver.findElement(By.id("input_city")).clear();
-        driver.findElement(By.id("input_city")).sendKeys("Madrid");
-        driver.findElement(By.id("input_country")).click();
-        driver.findElement(By.id("input_country")).clear();
-        driver.findElement(By.id("input_country")).sendKeys("Espanha");
-        driver.findElement(By.id("select_city")).click();
-        driver.findElement(By.id("days_before")).click();
-        driver.findElement(By.id("days_before")).clear();
-        driver.findElement(By.id("days_before")).sendKeys("2");
-        driver.findElement(By.cssSelector("input:nth-child(7)")).click();
-        MatcherAssert.assertThat(driver.findElement(By.cssSelector("h1")).getText(), CoreMatchers.is("History air quality in Madrid"));
+    void testHistoryAirQualityWorkFlow() {
+        this.driver.get("https://tqs-mid-term-project.ew.r.appspot.com/");
+        this.driver.findElement(By.id("input_city")).click();
+        this.driver.findElement(By.id("input_city")).clear();
+        this.driver.findElement(By.id("input_city")).sendKeys("Madrid");
+        this.driver.findElement(By.id("input_country")).click();
+        this.driver.findElement(By.id("input_country")).clear();
+        this.driver.findElement(By.id("input_country")).sendKeys("Espanha");
+        this.driver.findElement(By.id("select_city")).click();
+        this.driver.findElement(By.id("days_before")).click();
+        this.driver.findElement(By.id("days_before")).clear();
+        this.driver.findElement(By.id("days_before")).sendKeys("2");
+        this.driver.findElement(By.cssSelector("input:nth-child(7)")).click();
+        MatcherAssert.assertThat(this.driver.findElement(By.cssSelector("h1")).getText(), CoreMatchers.is("History air quality in Madrid"));
         {
-            List<WebElement> elements = driver.findElements(By.cssSelector("tr:nth-child(18) > th"));
+            List<WebElement> elements = this.driver.findElements(By.cssSelector("tr:nth-child(18) > th"));
             assert(elements.size() > 0);
         }
     }
