@@ -15,44 +15,68 @@
     <title>Aeolus</title>
 </head>
 <body>
-<h1>Select a location!</h1>
-<p>Click on a location on the map to select it. Drag the marker to change location.</p>
+<div class="container" style="text-align: center;align-content: center">
+    <h1>Select a location!</h1>
+    <div class="row">
+        <div class="col">
+            <p>Click on a location on the map to select it. Drag the marker to change location.</p>
 
-<!--map div-->
-<div>
-    <div id="map"></div>
+            <!--map div-->
+            <div>
+                <div id="map"></div>
+            </div>
+        </div>
+        <div class="col" style="margin-top: 10%">
+            <!--our form-->
+            <h3>Current location</h3>
+            <div>
+                <form method="post">
+                    <label for="lat">Latitude</label>
+                    <input type="text" id="lat" readonly="yes"><br>
+                    <label for="lng">Longitude</label>
+                    <input type="text" id="lng" readonly="yes">
+                </form>
+            </div>
+
+            <div style="margin-top: 3rem;">
+                <h3>Discover on map wanted location</h3>
+                <label for="input_country">Country:</label>
+                <input type="text" id="input_country"><br>
+                <label for="input_country">City:</label>
+                <input type="text" id="input_city">
+
+                <br>
+                <button id="select_city" onclick="updateMap()">Check on map</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 1rem">
+        <div class="col">
+            <form th:action="@{/currentairquality}" method="get">
+                <input type="text" id="form_latitude" name="latitude" hidden>
+                <input type="text" id="form_longitude" name="longitude" hidden>
+                <input type="text" id="form_country" name="country" hidden>
+                <input type="text" id="form_city" name="city" hidden>
+
+                <input type="submit" value="Current Air Quality">
+            </form>
+        </div>
+        <div class="col">
+            <form th:action="@{/historyairquality}" method="get">
+                <input type="text" id="form_latitude1" name="lat" hidden>
+                <input type="text" id="form_longitude1" name="lng" hidden>
+                <input type="text" id="form_country1" name="country" hidden>
+                <input type="text" id="form_city1" name="city" hidden>
+
+                <label for="days_before">Days before</label>
+                <input type="text" value="1" id="days_before" name="days">
+
+                <input type="submit" value="Historic Air Quality">
+            </form>
+        </div>
+    </div>
 </div>
-
-<!--our form-->
-<h2>Current location</h2>
-<div>
-    <form method="post">
-        <label for="lat">Latitude</label>
-        <input type="text" id="lat" readonly="yes"><br>
-        <label for="lng">Longitude</label>
-        <input type="text" id="lng" readonly="yes">
-    </form>
-</div>
-
-<div style="margin-top: 4%;">
-    <label for="input_country">Country:</label>
-    <input type="text" id="input_country"><br>
-    <label for="input_country">City:</label>
-    <input type="text" id="input_city">
-
-    <br>
-    <button id="select_city" onclick="updateMap()">Check on map</button>
-</div>
-
-<div style="margin-top: 5%">
-    <form th:action="@{/airquality}" method="get">
-        <input type="text" id="form_latitude" name="latitude" hidden>
-        <input type="text" id="form_longitude" name="longitude" hidden>
-
-        <input type="submit" value="Verify Air Quality">
-    </form>
-</div>
-
 
 <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

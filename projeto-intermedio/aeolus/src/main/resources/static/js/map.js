@@ -57,6 +57,14 @@ async function updateLocation(location) {
 
     document.getElementById('input_country').value = myJson['results']['0']['address_components']['3']['long_name'];
     document.getElementById('input_city').value = myJson['results']['0']['address_components']['2']['long_name'];
+
+    document.getElementById('form_country').value = document.getElementById('input_country').value;
+    document.getElementById('form_city').value = document.getElementById('input_city').value;
+
+
+    document.getElementById('form_country1').value = document.getElementById('input_country').value;
+    document.getElementById('form_city1').value = document.getElementById('input_city').value;
+
 }
 
 const updateMap = async () => {
@@ -88,9 +96,13 @@ function markerLocation(){
     document.getElementById('lat').value = currentLocation.lat(); //latitude
     document.getElementById('lng').value = currentLocation.lng(); //longitude
 
-    // para o form
+    // para os forms
     document.getElementById('form_latitude').value = currentLocation.lat(); //longitude
     document.getElementById('form_longitude').value = currentLocation.lng(); //longitude
+
+    document.getElementById('form_latitude1').value = currentLocation.lat(); //longitude
+    document.getElementById('form_longitude1').value = currentLocation.lng(); //longitude
+
 }
 
 google.maps.event.addDomListener(window, 'load', initMap);

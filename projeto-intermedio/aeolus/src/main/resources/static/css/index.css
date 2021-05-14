@@ -1,9 +1,4 @@
-body {
-    text-align: center;
-    align-content: center;
-}
-
 #map {
-    width:700px;
-    height: 500px;
+    width:40rem;
+    height: 40rem;
 }
