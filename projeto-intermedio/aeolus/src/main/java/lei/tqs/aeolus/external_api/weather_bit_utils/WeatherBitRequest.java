@@ -1,6 +1,5 @@
 package lei.tqs.aeolus.external_api.weather_bit_utils;
 
-import lei.tqs.aeolus.external_api.open_weather_utils.OpenWeatherResponse;
 import lei.tqs.aeolus.utils.GeneralUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.client.RestClientException;
