@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+          #map{ width:700px; height: 500px; }
+        </style>
+        <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPzw45SG9x0XQS6cxU6lINfEVSxuJ1g6s&callback=initMap">
+        </script>
+    
+        <title>Save Marker Example</title>
+    </head>
+    <body style="text-align: center;">
+        <h1>Select a location!</h1>
+        <p>Click on a location on the map to select it. Drag the marker to change location.</p>
+        
+        <!--map div-->
+        <div style="margin-left: 30%; width: 50%;">
+            <div id="map"></div>
+        </div>
+        
+        <!--our form-->
+        <h2>Current location</h2>
+        <div>
+            <form method="post">
+                <label for="lat">Latitude</label>
+                <input type="text" id="lat" readonly="yes"><br>
+                <label for="lng">Longitude</label>
+                <input type="text" id="lng" readonly="yes">
+            </form>
+        </div>
+
+        <div style="margin-top: 4%;">
+            <form method="post">
+                <label for="input_country">Country:</label>
+                <input type="text" id="input_country"><br>
+                <label for="input_country">City:</label>
+                <input type="text" id="input_city">
+
+                <br>
+                <button id="select_city" onclick="updateMap()">Select city</button>
+            </form>
+        </div>
+        
+        <script type="text/javascript" src="map.js"></script>
+    </body>
+</html>

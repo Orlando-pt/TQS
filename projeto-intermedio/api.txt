@@ -1,0 +1,21 @@
+weatherbit.io:
+current:
+curl -X GET --header 'Accept: application/json' 'https://api.weatherbit.io/v2.0/current/airquality?lat=41.16225097228622&lon=-8.628822176072289&key=e24637b4763e45d8a8b83975cc282ca7'
+
+history:
+curl -X GET --header 'Accept: application/json' 'https://api.weatherbit.io/v2.0/history/airquality?lat=40.866057889889206&lon=-8.645710577339893&key=e24637b4763e45d8a8b83975cc282ca7'
+
+openweather:
+current:
+curl -X GET --header 'Accept: application/json' 'http://api.openweathermap.org/data/2.5/air_pollution?lat=-8.645710577339893&lon=40.866057889889206&appid=00ae9df8c755778aea621c4543cf6b25'
+
+forecast:
+curl -X GET --header 'Accept: application/json' 'http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=-8.645710577339893&lon=40.866057889889206&appid=00ae9df8c755778aea621c4543cf6b25'
+
+o history tem uma forma estranha de dizer quais são os dias
+
+https://www.dgs.pt/paginas-de-sistema/saude-de-a-a-z/qualidade-do-ar-ambiente/indice-de-qualidade-do-ar.aspx
+
+https://api.weatherbit.io/v2.0/history/airquality?lat=40.866057889889206&lon=-8.645710577339893&key=e24637b4763e45d8a8b83975cc282ca7
+
+http://api.openweathermap.org/data/2.5/air_pollution?lat=40.866057889889206&lon=-8.645710577339893&appid=00ae9df8c755778aea621c4543cf6b25

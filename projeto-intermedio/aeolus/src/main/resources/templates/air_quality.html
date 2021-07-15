@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <title>Air Quality</title>
+</head>
+<body>
+<div class="container" style="align-content: center; text-align: center">
+    <h1 th:text="${title}">...</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">TimeStamp</th>
+            <th scope="col">CO</th>
+            <th scope="col">NO2</th>
+            <th scope="col">O3</th>
+            <th scope="col">SO2</th>
+            <th scope="col">PM10</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="measure : ${response.measureList}">
+            <th scope="row" th:text="${#dates.formatISO(measure.timestamp)}">...</th>
+
+            <td th:if="${measure.co} >= 400" style="background-color: orangered" th:text="${measure.co}">...</td>
+            <td th:if="${measure.co} >= 200 and ${measure.co} < 400" style="background-color: orange" th:text="${measure.co}">...</td>
+            <td th:if="${measure.co} >= 140 and ${measure.co} < 200" style="background-color: yellow" th:text="${measure.co}">...</td>
+            <td th:if="${measure.co} >= 100 and ${measure.co} < 140" style="background-color: darkseagreen" th:text="${measure.co}">...</td>
+            <td th:if="${measure.co} >= 0 and ${measure.co} < 100" style="background-color: darkgreen" th:text="${measure.co}">...</td>
+
+            <td th:if="${measure.no2} >= 240" style="background-color: orangered" th:text="${measure.no2}">...</td>
+            <td th:if="${measure.no2} >= 180 and ${measure.no2} < 140" style="background-color: orange" th:text="${measure.no2}">...</td>
+            <td th:if="${measure.no2} >= 120 and ${measure.no2} < 180" style="background-color: yellow" th:text="${measure.no2}">...</td>
+            <td th:if="${measure.no2} >= 60 and ${measure.no2} < 120" style="background-color: darkseagreen" th:text="${measure.no2}">...</td>
+            <td th:if="${measure.no2} >= 0 and ${measure.no2} < 60" style="background-color: darkgreen" th:text="${measure.no2}">...</td>
+
+            <td th:if="${measure.o3} >= 120" style="background-color: orangered" th:text="${measure.o3}">...</td>
+            <td th:if="${measure.o3} >= 50 and ${measure.o3} < 120" style="background-color: orange" th:text="${measure.o3}">...</td>
+            <td th:if="${measure.o3} >= 25 and ${measure.o3} < 50" style="background-color: yellow" th:text="${measure.o3}">...</td>
+            <td th:if="${measure.o3} >= 20 and ${measure.o3} < 25" style="background-color: darkseagreen" th:text="${measure.o3}">...</td>
+            <td th:if="${measure.o3} >= 0 and ${measure.o3} < 20" style="background-color: darkgreen" th:text="${measure.o3}">...</td>
+
+            <td th:if="${measure.so2} >= 500" style="background-color: orangered" th:text="${measure.so2}">...</td>
+            <td th:if="${measure.so2} >= 350 and ${measure.so2} < 500" style="background-color: orange" th:text="${measure.so2}">...</td>
+            <td th:if="${measure.so2} >= 210 and ${measure.so2} < 350" style="background-color: yellow" th:text="${measure.so2}">...</td>
+            <td th:if="${measure.so2} >= 140 and ${measure.so2} < 210" style="background-color: darkseagreen" th:text="${measure.so2}">...</td>
+            <td th:if="${measure.so2} >= 0 and ${measure.so2} < 140" style="background-color: darkgreen" th:text="${measure.so2}">...</td>
+
+            <td th:if="${measure.pm10} >= 10000" style="background-color: orangered" th:text="${measure.pm10}">...</td>
+            <td th:if="${measure.pm10} >= 8500 and ${measure.pm10} < 10000" style="background-color: orange" th:text="${measure.pm10}">...</td>
+            <td th:if="${measure.pm10} >= 7000 and ${measure.pm10} < 8500" style="background-color: yellow" th:text="${measure.pm10}">...</td>
+            <td th:if="${measure.pm10} >= 5000 and ${measure.pm10} < 7000" style="background-color: darkseagreen" th:text="${measure.pm10}">...</td>
+            <td th:if="${measure.pm10} >= 0 and ${measure.pm10} < 5000" style="background-color: darkgreen" th:text="${measure.pm10}">...</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+</body>
+</html>

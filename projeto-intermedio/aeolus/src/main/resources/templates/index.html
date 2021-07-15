@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+
+    <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPzw45SG9x0XQS6cxU6lINfEVSxuJ1g6s&callback=initMap">
+    </script>
+    <title>Aeolus</title>
+</head>
+<body>
+<div class="container" style="text-align: center;align-content: center">
+    <h1>Select a location!</h1>
+    <div class="row">
+        <div class="col">
+            <p>Click on a location on the map to select it. Drag the marker to change location.</p>
+
+            <!--map div-->
+            <div>
+                <div id="map"></div>
+            </div>
+        </div>
+        <div class="col" style="margin-top: 10%">
+            <!--our form-->
+            <h3>Current location</h3>
+            <div>
+                <form method="post">
+                    <label for="lat">Latitude</label>
+                    <input type="text" id="lat" readonly="yes"><br>
+                    <label for="lng">Longitude</label>
+                    <input type="text" id="lng" readonly="yes">
+                </form>
+            </div>
+
+            <div style="margin-top: 3rem;">
+                <h3>Discover on map wanted location</h3>
+                <label for="input_country">Country:</label>
+                <input type="text" id="input_country"><br>
+                <label for="input_country">City:</label>
+                <input type="text" id="input_city">
+
+                <br>
+                <button id="select_city" onclick="updateMap()">Check on map</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 1rem">
+        <div class="col">
+            <form th:action="@{/currentairquality}" method="get">
+                <input type="text" id="form_latitude" name="latitude" hidden>
+                <input type="text" id="form_longitude" name="longitude" hidden>
+                <input type="text" id="form_country" name="country" hidden>
+                <input type="text" id="form_city" name="city" hidden>
+
+                <input type="submit" value="Current Air Quality">
+            </form>
+        </div>
+        <div class="col">
+            <form th:action="@{/historyairquality}" method="get">
+                <input type="text" id="form_latitude1" name="lat" hidden>
+                <input type="text" id="form_longitude1" name="lng" hidden>
+                <input type="text" id="form_country1" name="country" hidden>
+                <input type="text" id="form_city1" name="city" hidden>
+
+                <label for="days_before">Days before</label>
+                <input type="text" value="1" id="days_before" name="days">
+
+                <input type="submit" value="Historic Air Quality">
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+<script type="text/javascript" th:src="@{/js/map.js}"></script>
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+
+</body>
+</html>
